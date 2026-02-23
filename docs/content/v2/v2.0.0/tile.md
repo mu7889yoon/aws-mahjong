@@ -21,9 +21,10 @@ v2.0.0 の牌一覧です。
 
 
 <script type="module">
-  import { renderWithOutputTheme } from "/assets/v2.0.0/merjong-wrapper.js";
+  const assetRoot = "{{< asseturl "assets/v2.0.0" >}}";
+  const { renderWithOutputTheme } = await import(`${assetRoot}/merjong-wrapper.js`);
 
-  const baseUrl = "/assets/v2.0.0/output/";
+  const baseUrl = `${assetRoot}/output/`;
   const rows = [
     { id: "manzu", mpsz: "123456789m" },
     { id: "pinzu", mpsz: "123456789p" },

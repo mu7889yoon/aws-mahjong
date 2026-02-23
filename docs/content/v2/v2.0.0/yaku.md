@@ -8,10 +8,11 @@ v2.0.0 の役サンプル一覧です。
 <div id="yaku-list-v200"></div>
 
 <script type="module">
-  import { renderWithOutputTheme } from "/assets/v2.0.0/merjong-wrapper.js";
+  const assetRoot = "{{< asseturl "assets/v2.0.0" >}}";
+  const { renderWithOutputTheme } = await import(`${assetRoot}/merjong-wrapper.js`);
 
-  const baseUrl = "/assets/v2.0.0/output/";
-  const dataUrl = "/assets/v2.0.0/yaku.json";
+  const baseUrl = `${assetRoot}/output/`;
+  const dataUrl = `${assetRoot}/yaku.json`;
   const list = document.getElementById("yaku-list-v200");
 
   function renderInto(id, mpsz) {
