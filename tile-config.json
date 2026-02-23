@@ -1,0 +1,347 @@
+{
+  "tiles": [
+    {
+      "id": "1m",
+      "type": "m",
+      "number": 1,
+      "awsService": {
+        "id": "lambda",
+        "displayName": "AWS Lambda",
+        "iconPath": "assets/icons/Arch_AWS-Lambda_64.svg"
+      }
+    },
+    {
+      "id": "2m",
+      "type": "m",
+      "number": 2,
+      "awsService": {
+        "id": "ec2",
+        "displayName": "Amazon EC2",
+        "iconPath": "assets/icons/Arch_Amazon-EC2_64.svg"
+      }
+    },
+    {
+      "id": "3m",
+      "type": "m",
+      "number": 3,
+      "awsService": {
+        "id": "ecs",
+        "displayName": "Amazon ECS",
+        "iconPath": "assets/icons/Arch_Amazon-Elastic-Container-Service_64.svg"
+      }
+    },
+    {
+      "id": "4m",
+      "type": "m",
+      "number": 4,
+      "awsService": {
+        "id": "ec2-auto-scaling",
+        "displayName": "Amazon EC2 Auto Scaling",
+        "iconPath": "assets/icons/Arch_Amazon-EC2-Auto-Scaling_64.svg"
+      }
+    },
+    {
+      "id": "5m",
+      "type": "m",
+      "number": 5,
+      "awsService": {
+        "id": "batch",
+        "displayName": "AWS Batch",
+        "iconPath": "assets/icons/Arch_AWS-Batch_64.svg"
+      }
+    },
+    {
+      "id": "6m",
+      "type": "m",
+      "number": 6,
+      "awsService": {
+        "id": "ecr",
+        "displayName": "Amazon ECR",
+        "iconPath": "assets/icons/Arch_Amazon-Elastic-Container-Registry_64.svg"
+      }
+    },
+    {
+      "id": "7m",
+      "type": "m",
+      "number": 7,
+      "awsService": {
+        "id": "codecommit",
+        "displayName": "AWS CodeCommit",
+        "iconPath": "assets/icons/Arch_AWS-CodeCommit_64.svg"
+      }
+    },
+    {
+      "id": "8m",
+      "type": "m",
+      "number": 8,
+      "awsService": {
+        "id": "codebuild",
+        "displayName": "AWS CodeBuild",
+        "iconPath": "assets/icons/Arch_AWS-CodeBuild_64.svg"
+      }
+    },
+    {
+      "id": "9m",
+      "type": "m",
+      "number": 9,
+      "awsService": {
+        "id": "codedeploy",
+        "displayName": "AWS CodeDeploy",
+        "iconPath": "assets/icons/Arch_AWS-CodeDeploy_64.svg"
+      }
+    },
+    {
+      "id": "1p",
+      "type": "p",
+      "number": 1,
+      "awsService": {
+        "id": "aurora",
+        "displayName": "Amazon Aurora",
+        "iconPath": "assets/icons/Arch_Amazon-Aurora_64.svg"
+      }
+    },
+    {
+      "id": "2p",
+      "type": "p",
+      "number": 2,
+      "awsService": {
+        "id": "dynamodb",
+        "displayName": "Amazon DynamoDB",
+        "iconPath": "assets/icons/Arch_Amazon-DynamoDB_64.svg"
+      }
+    },
+    {
+      "id": "3p",
+      "type": "p",
+      "number": 3,
+      "awsService": {
+        "id": "elasticache",
+        "displayName": "Amazon ElastiCache",
+        "iconPath": "assets/icons/Arch_Amazon-ElastiCache_64.svg"
+      }
+    },
+    {
+      "id": "4p",
+      "type": "p",
+      "number": 4,
+      "awsService": {
+        "id": "bedrock",
+        "displayName": "Amazon Bedrock",
+        "iconPath": "assets/icons/Arch_Amazon-Bedrock_64.svg"
+      }
+    },
+    {
+      "id": "5p",
+      "type": "p",
+      "number": 5,
+      "awsService": {
+        "id": "sagemaker",
+        "displayName": "Amazon SageMaker",
+        "iconPath": "assets/icons/Arch_Amazon-SageMaker_64.svg"
+      }
+    },
+    {
+      "id": "6p",
+      "type": "p",
+      "number": 6,
+      "awsService": {
+        "id": "direct-connect",
+        "displayName": "AWS Direct Connect",
+        "iconPath": "assets/icons/Arch_AWS-Direct-Connect_64.svg"
+      }
+    },
+    {
+      "id": "7p",
+      "type": "p",
+      "number": 7,
+      "awsService": {
+        "id": "cloudfront",
+        "displayName": "Amazon CloudFront",
+        "iconPath": "assets/icons/Arch_Amazon-CloudFront_64.svg"
+      }
+    },
+    {
+      "id": "8p",
+      "type": "p",
+      "number": 8,
+      "awsService": {
+        "id": "route53",
+        "displayName": "Amazon Route 53",
+        "iconPath": "assets/icons/Arch_Amazon-Route-53_64.svg"
+      }
+    },
+    {
+      "id": "9p",
+      "type": "p",
+      "number": 9,
+      "awsService": {
+        "id": "elb",
+        "displayName": "Elastic Load Balancing",
+        "iconPath": "assets/icons/Arch_Elastic-Load-Balancing_64.svg"
+      }
+    },
+    {
+      "id": "1s",
+      "type": "s",
+      "number": 1,
+      "awsService": {
+        "id": "step-functions",
+        "displayName": "AWS Step Functions",
+        "iconPath": "assets/icons/Arch_AWS-Step-Functions_64.svg"
+      }
+    },
+    {
+      "id": "2s",
+      "type": "s",
+      "number": 2,
+      "awsService": {
+        "id": "api-gateway",
+        "displayName": "Amazon API Gateway",
+        "iconPath": "assets/icons/Arch_Amazon-API-Gateway_64.svg"
+      }
+    },
+    {
+      "id": "3s",
+      "type": "s",
+      "number": 3,
+      "awsService": {
+        "id": "eventbridge",
+        "displayName": "Amazon EventBridge",
+        "iconPath": "assets/icons/Arch_Amazon-EventBridge_64.svg"
+      }
+    },
+    {
+      "id": "4s",
+      "type": "s",
+      "number": 4,
+      "awsService": {
+        "id": "sns",
+        "displayName": "Amazon SNS",
+        "iconPath": "assets/icons/Arch_Amazon-Simple-Notification-Service_64.svg"
+      }
+    },
+    {
+      "id": "5s",
+      "type": "s",
+      "number": 5,
+      "awsService": {
+        "id": "sqs",
+        "displayName": "Amazon SQS",
+        "iconPath": "assets/icons/Arch_Amazon-Simple-Queue-Service_64.svg"
+      }
+    },
+    {
+      "id": "6s",
+      "type": "s",
+      "number": 6,
+      "awsService": {
+        "id": "efs",
+        "displayName": "Amazon EFS",
+        "iconPath": "assets/icons/Arch_Amazon-EFS_64.svg"
+      }
+    },
+    {
+      "id": "7s",
+      "type": "s",
+      "number": 7,
+      "awsService": {
+        "id": "s3",
+        "displayName": "Amazon S3",
+        "iconPath": "assets/icons/Arch_Amazon-Simple-Storage-Service_64.svg"
+      }
+    },
+    {
+      "id": "8s",
+      "type": "s",
+      "number": 8,
+      "awsService": {
+        "id": "placeholder-8s",
+        "displayName": "TBD",
+        "iconPath": "assets/icons/Arch_AWS-Lambda_64.svg"
+      }
+    },
+    {
+      "id": "9s",
+      "type": "s",
+      "number": 9,
+      "awsService": {
+        "id": "placeholder-9s",
+        "displayName": "TBD",
+        "iconPath": "assets/icons/Arch_AWS-Lambda_64.svg"
+      }
+    },
+    {
+      "id": "1z",
+      "type": "z",
+      "number": 1,
+      "awsService": {
+        "id": "us-east",
+        "displayName": "us-east",
+        "iconPath": "assets/icons/us-east.svg"
+      }
+    },
+    {
+      "id": "2z",
+      "type": "z",
+      "number": 2,
+      "awsService": {
+        "id": "ap-southeast",
+        "displayName": "ap-southeast",
+        "iconPath": "assets/icons/ap-southeast.svg"
+      }
+    },
+    {
+      "id": "3z",
+      "type": "z",
+      "number": 3,
+      "awsService": {
+        "id": "us-west",
+        "displayName": "us-west",
+        "iconPath": "assets/icons/us-west.svg"
+      }
+    },
+    {
+      "id": "4z",
+      "type": "z",
+      "number": 4,
+      "awsService": {
+        "id": "ap-northeast",
+        "displayName": "ap-northeast",
+        "iconPath": "assets/icons/ap-northeast.svg"
+      }
+    },
+    {
+      "id": "5z",
+      "type": "z",
+      "number": 5,
+      "awsService": {
+        "id": "kiro",
+        "displayName": "Kiro",
+        "iconPath": "assets/icons/kiro.svg"
+      }
+    },
+    {
+      "id": "6z",
+      "type": "z",
+      "number": 6,
+      "awsService": {
+        "id": "costexplorer",
+        "displayName": "AWS Cost Explorer",
+        "iconPath": "assets/icons/Arch_AWS-Cost-Explorer_64.svg"
+      }
+    },
+    {
+      "id": "7z",
+      "type": "z",
+      "number": 7,
+      "awsService": {
+        "id": "cloudformation",
+        "displayName": "AWS CloudFormation",
+        "iconPath": "assets/icons/Arch_AWS-CloudFormation_64.svg"
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0"
+  }
+}

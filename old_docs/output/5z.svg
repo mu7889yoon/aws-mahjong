@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="17mm" height="24mm" viewBox="0 0 68 96">
+  <!-- 牌種類表示エリア（右上） -->
+  <text 
+    id="tile-type-placeholder" 
+    x="64" 
+    y="12" 
+    font-family="sans-serif" 
+    font-size="8" 
+    text-anchor="end" 
+    fill="#666666"
+  >白</text>
+  
+  <!-- AWSアイコン表示エリア（中央） -->
+  <g id="icon-placeholder" transform="translate(4, 18)"><text x="20" y="24" font-family="sans-serif" font-size="6" text-anchor="middle" fill="#999999">kiro</text></g>
+  
+  <!-- サービス名表示エリア（下部） -->
+  <text 
+    id="service-name-placeholder" 
+    x="34" 
+    y="88" 
+    font-family="sans-serif" 
+    font-size="6" 
+    text-anchor="middle" 
+    fill="#333333"
+  >Kiro</text>
+</svg>

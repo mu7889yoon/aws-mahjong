@@ -1,0 +1,18 @@
+{{- define "main" -}}
+<h1>{{ .Title }}</h1>
+{{- .Content -}}
+{{- $paginator := .Paginate (first 50 .Data.Pages) -}}
+{{- range $paginator.Pages -}}
+{{ .Render "summary"}}
+{{- end -}}
+{{- if gt $paginator.TotalPages 1 -}}
+<nav class="post-pagination">
+  {{- with $paginator.Prev -}}
+  <a href="{{ .URL }}">Newer</a>
+  {{- end -}}
+  {{- with $paginator.Next -}}
+  <a href="{{ .URL }}">Older</a>
+  {{- end -}}
+</nav>
+{{- end -}}
+{{- end -}}

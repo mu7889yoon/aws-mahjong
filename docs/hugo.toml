@@ -1,0 +1,21 @@
+baseURL = 'https://example.org/'
+languageCode = 'ja-jp'
+title = 'AWS麻雀'
+ignoreLogs = ['sections-none-/']
+
+[module]
+  proxy = "direct"
+  [module.hugoVersion]
+    extended = true
+    min = "0.110.0"
+  [[module.imports]]
+    path = "github.com/thingsym/hugo-theme-techdoc"
+
+[params]
+  menu_style = "slide-menu"
+  ordersectionsby = "weight"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
