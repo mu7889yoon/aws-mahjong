@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://mu7889yoon.github.io/aws-mahjong/'
 languageCode = 'ja-jp'
 title = 'AWS麻雀'
 ignoreLogs = ['sections-none-/']
