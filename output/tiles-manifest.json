@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-23T12:35:53.018Z",
+  "generatedAt": "2026-02-23T13:55:37.699Z",
   "tileCount": 34,
   "tiles": [
     {
@@ -36,21 +36,21 @@
     {
       "id": "4m",
       "type": "m",
-      "number": 4,
-      "filePath": "output/4m.svg",
-      "awsService": {
-        "id": "ec2-auto-scaling",
-        "displayName": "Amazon EC2 Auto Scaling"
-      }
-    },
-    {
-      "id": "5m",
-      "type": "m",
       "number": 5,
       "filePath": "output/5m.svg",
       "awsService": {
         "id": "batch",
         "displayName": "AWS Batch"
+      }
+    },
+    {
+      "id": "5m",
+      "type": "m",
+      "number": 4,
+      "filePath": "output/4m.svg",
+      "awsService": {
+        "id": "ec2-auto-scaling",
+        "displayName": "Amazon EC2 Auto Scaling"
       }
     },
     {
@@ -69,8 +69,8 @@
       "number": 7,
       "filePath": "output/7m.svg",
       "awsService": {
-        "id": "codecommit",
-        "displayName": "AWS CodeCommit"
+        "id": "step-functions",
+        "displayName": "AWS Step Functions"
       }
     },
     {
@@ -79,8 +79,8 @@
       "number": 8,
       "filePath": "output/8m.svg",
       "awsService": {
-        "id": "codebuild",
-        "displayName": "AWS CodeBuild"
+        "id": "eventbridge",
+        "displayName": "Amazon EventBridge"
       }
     },
     {
@@ -89,8 +89,8 @@
       "number": 9,
       "filePath": "output/9m.svg",
       "awsService": {
-        "id": "codedeploy",
-        "displayName": "AWS CodeDeploy"
+        "id": "sqs",
+        "displayName": "Amazon SQS"
       }
     },
     {
@@ -99,8 +99,8 @@
       "number": 1,
       "filePath": "output/1p.svg",
       "awsService": {
-        "id": "aurora",
-        "displayName": "Amazon Aurora"
+        "id": "direct-connect",
+        "displayName": "AWS Direct Connect"
       }
     },
     {
@@ -109,8 +109,8 @@
       "number": 2,
       "filePath": "output/2p.svg",
       "awsService": {
-        "id": "dynamodb",
-        "displayName": "Amazon DynamoDB"
+        "id": "api-gateway",
+        "displayName": "Amazon API Gateway"
       }
     },
     {
@@ -119,8 +119,8 @@
       "number": 3,
       "filePath": "output/3p.svg",
       "awsService": {
-        "id": "elasticache",
-        "displayName": "Amazon ElastiCache"
+        "id": "elb",
+        "displayName": "Elastic Load Balancing"
       }
     },
     {
@@ -129,8 +129,8 @@
       "number": 4,
       "filePath": "output/4p.svg",
       "awsService": {
-        "id": "bedrock",
-        "displayName": "Amazon Bedrock"
+        "id": "cloudfront",
+        "displayName": "Amazon CloudFront"
       }
     },
     {
@@ -139,8 +139,8 @@
       "number": 5,
       "filePath": "output/5p.svg",
       "awsService": {
-        "id": "sagemaker",
-        "displayName": "Amazon SageMaker"
+        "id": "route53",
+        "displayName": "Amazon Route 53"
       }
     },
     {
@@ -149,8 +149,8 @@
       "number": 6,
       "filePath": "output/6p.svg",
       "awsService": {
-        "id": "direct-connect",
-        "displayName": "AWS Direct Connect"
+        "id": "cloudformation",
+        "displayName": "AWS CloudFormation"
       }
     },
     {
@@ -159,8 +159,8 @@
       "number": 7,
       "filePath": "output/7p.svg",
       "awsService": {
-        "id": "cloudfront",
-        "displayName": "Amazon CloudFront"
+        "id": "codecommit",
+        "displayName": "AWS CodeCommit"
       }
     },
     {
@@ -169,8 +169,8 @@
       "number": 8,
       "filePath": "output/8p.svg",
       "awsService": {
-        "id": "route53",
-        "displayName": "Amazon Route 53"
+        "id": "codebuild",
+        "displayName": "AWS CodeBuild"
       }
     },
     {
@@ -179,8 +179,8 @@
       "number": 9,
       "filePath": "output/9p.svg",
       "awsService": {
-        "id": "elb",
-        "displayName": "Elastic Load Balancing"
+        "id": "codedeploy",
+        "displayName": "AWS CodeDeploy"
       }
     },
     {
@@ -189,8 +189,8 @@
       "number": 1,
       "filePath": "output/1s.svg",
       "awsService": {
-        "id": "step-functions",
-        "displayName": "AWS Step Functions"
+        "id": "storagegateway",
+        "displayName": "AWS Storage Gateway"
       }
     },
     {
@@ -199,8 +199,8 @@
       "number": 2,
       "filePath": "output/2s.svg",
       "awsService": {
-        "id": "api-gateway",
-        "displayName": "Amazon API Gateway"
+        "id": "efs",
+        "displayName": "Amazon EFS"
       }
     },
     {
@@ -209,8 +209,8 @@
       "number": 3,
       "filePath": "output/3s.svg",
       "awsService": {
-        "id": "eventbridge",
-        "displayName": "Amazon EventBridge"
+        "id": "s3",
+        "displayName": "Amazon S3"
       }
     },
     {
@@ -219,8 +219,8 @@
       "number": 4,
       "filePath": "output/4s.svg",
       "awsService": {
-        "id": "sns",
-        "displayName": "Amazon SNS"
+        "id": "agentcore",
+        "displayName": "Amazon Bedrock AgentCore"
       }
     },
     {
@@ -229,8 +229,8 @@
       "number": 5,
       "filePath": "output/5s.svg",
       "awsService": {
-        "id": "sqs",
-        "displayName": "Amazon SQS"
+        "id": "bedrock",
+        "displayName": "Amazon Bedrock"
       }
     },
     {
@@ -239,8 +239,8 @@
       "number": 6,
       "filePath": "output/6s.svg",
       "awsService": {
-        "id": "efs",
-        "displayName": "Amazon EFS"
+        "id": "sagemaker",
+        "displayName": "Amazon SageMaker"
       }
     },
     {
@@ -249,8 +249,8 @@
       "number": 7,
       "filePath": "output/7s.svg",
       "awsService": {
-        "id": "s3",
-        "displayName": "Amazon S3"
+        "id": "aurora",
+        "displayName": "Amazon Aurora"
       }
     },
     {
@@ -259,8 +259,8 @@
       "number": 8,
       "filePath": "output/8s.svg",
       "awsService": {
-        "id": "placeholder-8s",
-        "displayName": "TBD"
+        "id": "dynamodb",
+        "displayName": "Amazon DynamoDB"
       }
     },
     {
@@ -269,8 +269,8 @@
       "number": 9,
       "filePath": "output/9s.svg",
       "awsService": {
-        "id": "placeholder-9s",
-        "displayName": "TBD"
+        "id": "elasticache",
+        "displayName": "Amazon ElastiCache"
       }
     },
     {
@@ -339,8 +339,8 @@
       "number": 7,
       "filePath": "output/7z.svg",
       "awsService": {
-        "id": "cloudformation",
-        "displayName": "AWS CloudFormation"
+        "id": "iam",
+        "displayName": "AWS IAM"
       }
     }
   ]

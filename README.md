@@ -1,5 +1,7 @@
 # aws-mahjong
 
+https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/architecture/approved/architecture-icons/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582.zip
+
 AWSアイコン麻雀牌の生成ツールです。  
 このリポジトリには次の機能を統合しています。
 
