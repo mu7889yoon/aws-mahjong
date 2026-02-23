@@ -28,3 +28,4 @@ coverage/
 .env
 .env.local
 output/*.png
+output/*.svg

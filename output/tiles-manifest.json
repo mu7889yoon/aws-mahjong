@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-23T06:03:00.047Z",
+  "generatedAt": "2026-02-23T12:35:53.018Z",
   "tileCount": 34,
   "tiles": [
     {
@@ -11,8 +11,7 @@
       "awsService": {
         "id": "lambda",
         "displayName": "AWS Lambda"
-      },
-      "pngFilePath": "output/1m.png"
+      }
     },
     {
       "id": "2m",
@@ -22,8 +21,7 @@
       "awsService": {
         "id": "ec2",
         "displayName": "Amazon EC2"
-      },
-      "pngFilePath": "output/2m.png"
+      }
     },
     {
       "id": "3m",
@@ -33,8 +31,7 @@
       "awsService": {
         "id": "ecs",
         "displayName": "Amazon ECS"
-      },
-      "pngFilePath": "output/3m.png"
+      }
     },
     {
       "id": "4m",
@@ -44,8 +41,7 @@
       "awsService": {
         "id": "ec2-auto-scaling",
         "displayName": "Amazon EC2 Auto Scaling"
-      },
-      "pngFilePath": "output/4m.png"
+      }
     },
     {
       "id": "5m",
@@ -55,8 +51,7 @@
       "awsService": {
         "id": "batch",
         "displayName": "AWS Batch"
-      },
-      "pngFilePath": "output/5m.png"
+      }
     },
     {
       "id": "6m",
@@ -66,8 +61,7 @@
       "awsService": {
         "id": "ecr",
         "displayName": "Amazon ECR"
-      },
-      "pngFilePath": "output/6m.png"
+      }
     },
     {
       "id": "7m",
@@ -77,8 +71,7 @@
       "awsService": {
         "id": "codecommit",
         "displayName": "AWS CodeCommit"
-      },
-      "pngFilePath": "output/7m.png"
+      }
     },
     {
       "id": "8m",
@@ -88,8 +81,7 @@
       "awsService": {
         "id": "codebuild",
         "displayName": "AWS CodeBuild"
-      },
-      "pngFilePath": "output/8m.png"
+      }
     },
     {
       "id": "9m",
@@ -99,8 +91,7 @@
       "awsService": {
         "id": "codedeploy",
         "displayName": "AWS CodeDeploy"
-      },
-      "pngFilePath": "output/9m.png"
+      }
     },
     {
       "id": "1p",
@@ -110,8 +101,7 @@
       "awsService": {
         "id": "aurora",
         "displayName": "Amazon Aurora"
-      },
-      "pngFilePath": "output/1p.png"
+      }
     },
     {
       "id": "2p",
@@ -121,8 +111,7 @@
       "awsService": {
         "id": "dynamodb",
         "displayName": "Amazon DynamoDB"
-      },
-      "pngFilePath": "output/2p.png"
+      }
     },
     {
       "id": "3p",
@@ -132,8 +121,7 @@
       "awsService": {
         "id": "elasticache",
         "displayName": "Amazon ElastiCache"
-      },
-      "pngFilePath": "output/3p.png"
+      }
     },
     {
       "id": "4p",
@@ -143,8 +131,7 @@
       "awsService": {
         "id": "bedrock",
         "displayName": "Amazon Bedrock"
-      },
-      "pngFilePath": "output/4p.png"
+      }
     },
     {
       "id": "5p",
@@ -154,8 +141,7 @@
       "awsService": {
         "id": "sagemaker",
         "displayName": "Amazon SageMaker"
-      },
-      "pngFilePath": "output/5p.png"
+      }
     },
     {
       "id": "6p",
@@ -165,8 +151,7 @@
       "awsService": {
         "id": "direct-connect",
         "displayName": "AWS Direct Connect"
-      },
-      "pngFilePath": "output/6p.png"
+      }
     },
     {
       "id": "7p",
@@ -176,8 +161,7 @@
       "awsService": {
         "id": "cloudfront",
         "displayName": "Amazon CloudFront"
-      },
-      "pngFilePath": "output/7p.png"
+      }
     },
     {
       "id": "8p",
@@ -187,8 +171,7 @@
       "awsService": {
         "id": "route53",
         "displayName": "Amazon Route 53"
-      },
-      "pngFilePath": "output/8p.png"
+      }
     },
     {
       "id": "9p",
@@ -198,8 +181,7 @@
       "awsService": {
         "id": "elb",
         "displayName": "Elastic Load Balancing"
-      },
-      "pngFilePath": "output/9p.png"
+      }
     },
     {
       "id": "1s",
@@ -209,8 +191,7 @@
       "awsService": {
         "id": "step-functions",
         "displayName": "AWS Step Functions"
-      },
-      "pngFilePath": "output/1s.png"
+      }
     },
     {
       "id": "2s",
@@ -220,8 +201,7 @@
       "awsService": {
         "id": "api-gateway",
         "displayName": "Amazon API Gateway"
-      },
-      "pngFilePath": "output/2s.png"
+      }
     },
     {
       "id": "3s",
@@ -231,8 +211,7 @@
       "awsService": {
         "id": "eventbridge",
         "displayName": "Amazon EventBridge"
-      },
-      "pngFilePath": "output/3s.png"
+      }
     },
     {
       "id": "4s",
@@ -242,8 +221,7 @@
       "awsService": {
         "id": "sns",
         "displayName": "Amazon SNS"
-      },
-      "pngFilePath": "output/4s.png"
+      }
     },
     {
       "id": "5s",
@@ -253,8 +231,7 @@
       "awsService": {
         "id": "sqs",
         "displayName": "Amazon SQS"
-      },
-      "pngFilePath": "output/5s.png"
+      }
     },
     {
       "id": "6s",
@@ -264,8 +241,7 @@
       "awsService": {
         "id": "efs",
         "displayName": "Amazon EFS"
-      },
-      "pngFilePath": "output/6s.png"
+      }
     },
     {
       "id": "7s",
@@ -275,8 +251,7 @@
       "awsService": {
         "id": "s3",
         "displayName": "Amazon S3"
-      },
-      "pngFilePath": "output/7s.png"
+      }
     },
     {
       "id": "8s",
@@ -286,8 +261,7 @@
       "awsService": {
         "id": "placeholder-8s",
         "displayName": "TBD"
-      },
-      "pngFilePath": "output/8s.png"
+      }
     },
     {
       "id": "9s",
@@ -297,8 +271,7 @@
       "awsService": {
         "id": "placeholder-9s",
         "displayName": "TBD"
-      },
-      "pngFilePath": "output/9s.png"
+      }
     },
     {
       "id": "1z",
@@ -308,8 +281,7 @@
       "awsService": {
         "id": "us-east",
         "displayName": "us-east"
-      },
-      "pngFilePath": "output/1z.png"
+      }
     },
     {
       "id": "2z",
@@ -319,8 +291,7 @@
       "awsService": {
         "id": "ap-southeast",
         "displayName": "ap-southeast"
-      },
-      "pngFilePath": "output/2z.png"
+      }
     },
     {
       "id": "3z",
@@ -330,8 +301,7 @@
       "awsService": {
         "id": "us-west",
         "displayName": "us-west"
-      },
-      "pngFilePath": "output/3z.png"
+      }
     },
     {
       "id": "4z",
@@ -341,8 +311,7 @@
       "awsService": {
         "id": "ap-northeast",
         "displayName": "ap-northeast"
-      },
-      "pngFilePath": "output/4z.png"
+      }
     },
     {
       "id": "5z",
@@ -352,8 +321,7 @@
       "awsService": {
         "id": "kiro",
         "displayName": "Kiro"
-      },
-      "pngFilePath": "output/5z.png"
+      }
     },
     {
       "id": "6z",
@@ -363,8 +331,7 @@
       "awsService": {
         "id": "costexplorer",
         "displayName": "AWS Cost Explorer"
-      },
-      "pngFilePath": "output/6z.png"
+      }
     },
     {
       "id": "7z",
@@ -374,8 +341,7 @@
       "awsService": {
         "id": "cloudformation",
         "displayName": "AWS CloudFormation"
-      },
-      "pngFilePath": "output/7z.png"
+      }
     }
   ]
 }
