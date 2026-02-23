@@ -1,7 +1,6 @@
 +++
 title = "牌一覧"
-draft = false
-weight = 1
+weight = 2
 +++
 
 v2.0.0 の牌一覧です。
