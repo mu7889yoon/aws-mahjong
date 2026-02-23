@@ -87,7 +87,7 @@ jobs:
           hugo \
             --gc \
             --minify \
-            --baseURL "https://mu7889yoon.github.io/aws-mahjong/" \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
       - name: Cache save
         id: cache-save
