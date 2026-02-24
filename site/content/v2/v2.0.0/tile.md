@@ -8,15 +8,26 @@ v2.0.0 の牌一覧です。
 
 ## 萬子
 
+コンピューティングとサーバレス
+
 <div id="manzu"></div>
 
 ## 筒子
+
+ネットワークとDevTools
+
 <div id="pinzu"></div>
 
-## そうず
+## 索子
+
+ストレージとAI/MLとデータベース
+
 <div id="souzu"></div>
 
 ## 字牌
+
+リージョンなど
+
 <div id="jihai"></div>
 
 

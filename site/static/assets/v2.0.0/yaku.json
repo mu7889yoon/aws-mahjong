@@ -1,0 +1,260 @@
+{
+  "yakus": [
+    {
+      "id": "static-site-hosting",
+      "name": "静的サイトホスティング(CDP)",
+      "sampleMpszList": [
+        "45p3s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": [
+        "超低コストで静的サイトを構築することができる"
+      ]
+    },
+    {
+      "id": "serverless-api",
+      "name": "サーバレスAPI",
+      "sampleMpszList": [
+        "2p1m8s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": []
+    },
+    {
+      "id": "event-driven-architecture",
+      "name": "イベントドリブンアーキテクチャ",
+      "sampleMpszList": [
+        "8m1m2p"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": [
+        ""
+      ]
+    },
+    {
+      "id": "web-application",
+      "name": "Webアプリケーション(CDP)",
+      "sampleMpszList": [
+        "3p2m7s",
+        "3p3m7s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "in-memory-cache",
+      "name": "インメモリーキャッシュ(CDP)",
+      "sampleMpszList": [
+        "2m7s9s",
+        "3m7s9s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "batch",
+      "name": "バッチ",
+      "sampleMpszList": [
+        "865m"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": []
+    },
+    {
+      "id": "migration",
+      "name": "マイグレーション(CDP)",
+      "sampleMpszList": [
+        "1p7s2m"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "job-observer",
+      "name": "ジョブオブザーバー(CDP)",
+      "sampleMpszList": [
+        "9m4m2m"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "cicd-pipeline",
+      "name": "CI/CDパイプライン",
+      "sampleMpszList": [
+        "789p"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": true,
+      "han": 2,
+      "hanOpen": 1,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "rag-agent",
+      "name": "RAG エージェント",
+      "sampleMpszList": [
+        "345s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": true,
+      "han": 2,
+      "hanOpen": 1,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "master-replica",
+      "name": "マスター・レプリカ構成",
+      "sampleMpszList": [
+        "888s"
+      ],
+      "isPonAllowed": true,
+      "isChiAllowed": false,
+      "han": 2,
+      "hanOpen": 1,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "cicd-pipeline-kan",
+      "name": "CI/CDカン",
+      "sampleMpszList": [
+        "6789p"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": true,
+      "han": 3,
+      "hanOpen": 2,
+      "isCombineAllowed": false,
+      "description": [
+        "チーしてカンできる？意味がわからない"
+      ]
+    },
+    {
+      "id": "web-application-kan",
+      "name": "Webアプリケーション カン",
+      "sampleMpszList": [
+        "3p2m7s9s",
+        "3p3m7s9s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 3,
+      "hanOpen": 2,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "blue-green-deploy-kan",
+      "name": "Blue/Greenデプロイ カン",
+      "sampleMpszList": [
+        "5p36m7s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 3,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": ""
+    },
+    {
+      "id": "redundancy",
+      "name": "冗長化 - AWS一盃口",
+      "sampleMpszList": [
+        "3p2m7s-3p2m7s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 3,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": [
+        "同じAWS役が2つ揃った時に成立、通常の一盃口とは複合しない",
+        "以下の場合はWebアプリケーション(CDP)が2つとAWS一盃口で5翻となる"
+      ]
+    },
+    {
+      "id": "aws-three-concealed-triples1",
+      "name": "3AZ構成 - AWS三暗刻",
+      "sampleMpszList": [
+        "3p2m7s-3p2m7s-3p2m7s",
+        "333p-222m-777s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 3,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": [
+        "同じAWS役が3つ揃った時に成立、通常の三暗刻とは複合しない",
+        "以下の場合はWebアプリケーション(CDP)が3つとAWS三暗刻で6翻となる 上がる際はどちらの形状で牌を晒して良い。"
+      ]
+    },
+    {
+      "id": "dr-architecture",
+      "name": "DRアーキテクチャ",
+      "sampleMpszList": [
+        "55p-11z-22z-33p-22m-77s-33s",
+        "55p-33z-44z-33p-33m-77s-22s"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 13,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": [
+        "七対子の亜種"
+      ]
+    },
+    {
+      "id": "aws-all-green",
+      "name": "AWS 緑一色",
+      "sampleMpszList": [
+        "1s-2s-3s-4s-5s-6s-6z",
+        "123s-123s-444s-666s-66s"
+      ],
+      "isPonAllowed": true,
+      "isChiAllowed": true,
+      "han": 13,
+      "hanOpen": 13,
+      "isCombineAllowed": false,
+      "description": [
+        "以下の7つの牌で構成された4面子1雀頭または七対子であれば成立"
+      ]
+    }
+  ]
+}
