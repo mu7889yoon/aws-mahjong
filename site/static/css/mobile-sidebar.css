@@ -1,0 +1,59 @@
+.sidebar-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 480px) {
+  body.has-sidebar .sidebar-toggle {
+    align-items: center;
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 36px;
+    justify-content: center;
+    margin-right: 0.75rem;
+    vertical-align: middle;
+    width: 36px;
+  }
+
+  .sidebar-toggle__line {
+    background: currentColor;
+    border-radius: 2px;
+    display: block;
+    height: 2px;
+    width: 16px;
+  }
+
+  body.has-sidebar .sidebar {
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.24);
+    height: 100dvh;
+    left: 0;
+    max-width: 320px;
+    position: fixed;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-in-out;
+    width: 82vw;
+    z-index: 1200;
+  }
+
+  body.has-sidebar.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  body.has-sidebar.sidebar-open {
+    overflow: hidden;
+  }
+
+  body.has-sidebar.sidebar-open::before {
+    background: rgba(0, 0, 0, 0.35);
+    content: "";
+    inset: 0;
+    position: fixed;
+    z-index: 1100;
+  }
+}

@@ -8,25 +8,35 @@ v2.0.0 の牌一覧です。
 
 ## 萬子
 
-コンピューティングとサーバレス
+### コンピューティングとサーバレス
+
+- [AWS Lambda]
+- [Amazon EC2]
+- [Amazon ECS]
+- [Amazon EC2 Auto Scaling]
+- [AWS Batch]
+- [Amazon ECR]
+- [AWS Step Functions]
+- [Amazon Event Bridge]
+- [Amazon SQS]
 
 <div id="manzu"></div>
 
 ## 筒子
 
-ネットワークとDevTools
+### ネットワークとDevTools
 
 <div id="pinzu"></div>
 
 ## 索子
 
-ストレージとAI/MLとデータベース
+### ストレージとAI/MLとデータベース
 
 <div id="souzu"></div>
 
 ## 字牌
 
-リージョンなど
+### リージョンなど
 
 <div id="jihai"></div>
 

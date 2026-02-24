@@ -83,7 +83,7 @@ v2.0.0 の役サンプル一覧です。
         : `<span>鳴いた時の飜数: ${valueLabel(yaku.hanOpen)}</span>`;
     return `
       <section>
-        <h4>${name}</h4>
+        <h3>${name}</h3>
         <b class="yaku-description">${descriptionBlock}</b>
         <div>
           <span>ポン: ${boolLabel(ponAllowed)}</span>
@@ -129,7 +129,7 @@ v2.0.0 の役サンプル一覧です。
           const hanHeading = hanKey === "未設定" ? "飜数未設定" : `${hanKey}飜`;
           return `
             <section>
-              <h3>${hanHeading}</h3>
+              <h2>${hanHeading}</h2>
               ${items.map((yaku) => buildYakuRow(yaku)).join("")}
             </section>
           `;

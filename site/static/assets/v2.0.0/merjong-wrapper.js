@@ -326,6 +326,13 @@ export function renderDefault(mpsz) {
   return renderLocal(mpsz);
 }
 
+export function renderWithMerjong(mpsz, fallbackBaseUrl = "./output/") {
+  if (merjongAPI && typeof merjongAPI.render === "function") {
+    return merjongAPI.render(mpsz);
+  }
+  return renderWithOutputTheme(mpsz, fallbackBaseUrl);
+}
+
 export function renderWithCustomTheme(mpsz, themeConfig) {
   return renderLocal(mpsz, themeConfig);
 }
