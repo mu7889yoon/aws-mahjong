@@ -270,11 +270,11 @@ weight = 4
   }
 
   function renderTileSurface(mpsz) {
-    if (typeof merjongWrapper.renderWithMerjong === "function") {
-      return merjongWrapper.renderWithMerjong(mpsz, baseUrl);
-    }
     if (typeof merjongWrapper.renderWithOutputTheme === "function") {
       return merjongWrapper.renderWithOutputTheme(mpsz, baseUrl);
+    }
+    if (typeof merjongWrapper.renderWithMerjong === "function") {
+      return merjongWrapper.renderWithMerjong(mpsz, baseUrl);
     }
     if (typeof merjongWrapper.renderDefault === "function") {
       return merjongWrapper.renderDefault(mpsz);
