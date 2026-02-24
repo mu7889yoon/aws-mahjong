@@ -225,6 +225,19 @@
       ]
     },
     {
+      "id": "serverlesspresso",
+      "name": "Serverlesspresso",
+      "sampleMpszList": [
+        "2p1m8s-8m7m1m"
+      ],
+      "isPonAllowed": false,
+      "isChiAllowed": false,
+      "han": 3,
+      "hanOpen": null,
+      "isCombineAllowed": false,
+      "description": []
+    },
+    {
       "id": "dr-architecture",
       "name": "DRアーキテクチャ",
       "sampleMpszList": [
