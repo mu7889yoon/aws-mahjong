@@ -3,8 +3,6 @@ title = "役一覧"
 weight = 3
 +++
 
-v2.0.0 の役サンプル一覧です。
-
 <div id="yaku-list-v200"></div>
 
 <style>
