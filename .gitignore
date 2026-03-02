@@ -29,3 +29,7 @@ coverage/
 .env.local
 output/*.png
 output/*.svg
+
+assets/Icon-package_*
+
+site/static/assets/**/*.png

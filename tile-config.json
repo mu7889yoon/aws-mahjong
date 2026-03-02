@@ -277,7 +277,7 @@
       "awsService": {
         "id": "us-east",
         "displayName": "us-east",
-        "iconPath": "assets/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582/Architecture-Group-Icons_01302026/Region_32.svg"
+        "iconPath": "assets/1z.svg"
       }
     },
     {
@@ -285,9 +285,9 @@
       "type": "z",
       "number": 2,
       "awsService": {
-        "id": "ap-southeast",
-        "displayName": "ap-southeast",
-        "iconPath": "assets/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582/Architecture-Group-Icons_01302026/Region_32.svg"
+        "id": "af-south",
+        "displayName": "af-south",
+        "iconPath": "assets/2z.svg"
       }
     },
     {
@@ -295,9 +295,9 @@
       "type": "z",
       "number": 3,
       "awsService": {
-        "id": "us-west",
-        "displayName": "us-west",
-        "iconPath": "assets/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582/Architecture-Group-Icons_01302026/Region_32.svg"
+        "id": "eu-west",
+        "displayName": "eu-west",
+        "iconPath": "assets/3z.svg"
       }
     },
     {
@@ -307,7 +307,7 @@
       "awsService": {
         "id": "ap-northeast",
         "displayName": "ap-northeast",
-        "iconPath": "assets/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582/Architecture-Group-Icons_01302026/Region_32.svg"
+        "iconPath": "assets/4z.svg"
       }
     },
     {

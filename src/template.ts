@@ -96,7 +96,7 @@ export const PLACEHOLDERS = {
  * Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6
  */
 export const BASE_TILE_TEMPLATE = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="17mm" height="24mm" viewBox="0 0 68 96">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17mm" height="24mm" viewBox="0 0 68 96">
   <!-- 牌種類表示エリア（右上） -->
   <text 
     id="tile-type-placeholder" 
