@@ -332,16 +332,51 @@ weight = 4
     selectedHand.innerHTML = total > 0 ? `<div class="tile-surface">${renderTileSurface(mpsz)}</div>` : "";
   }
 
-  function matchesSample(sampleCounts) {
-    return Object.entries(sampleCounts).every(([tile, need]) => {
-      return (counts[tile] || 0) >= need;
-    });
+  function selectedEntries() {
+    return Object.entries(counts).filter(([, value]) => value > 0);
+  }
+
+  function evaluateSampleMatch(sampleCounts, selected) {
+    const sampleTotal = Object.values(sampleCounts).reduce((sum, value) => sum + value, 0);
+    if (sampleTotal === 0) {
+      return { matchedCount: 0, matchRate: 0 };
+    }
+
+    const matchedCount = selected.reduce((sum, [tile, value]) => {
+      return sum + Math.min(value, sampleCounts[tile] || 0);
+    }, 0);
+
+    return {
+      matchedCount,
+      matchRate: matchedCount / sampleTotal,
+    };
   }
 
   function buildRecommendation(yaku) {
     const samples = Array.isArray(yaku.sampleMpszList) ? yaku.sampleMpszList : [];
-    const matchedSample = samples.find((sample) => matchesSample(parseMpszToCounts(sample)));
-    if (!matchedSample) {
+    const selected = selectedEntries();
+    if (selected.length === 0) {
+      return null;
+    }
+
+    const best = samples
+      .map((sample) => {
+        const sampleCounts = parseMpszToCounts(sample);
+        const { matchedCount, matchRate } = evaluateSampleMatch(sampleCounts, selected);
+        return { sample, matchedCount, matchRate };
+      })
+      .filter((item) => item.matchedCount > 0)
+      .sort((a, b) => {
+        if (b.matchRate !== a.matchRate) {
+          return b.matchRate - a.matchRate;
+        }
+        if (b.matchedCount !== a.matchedCount) {
+          return b.matchedCount - a.matchedCount;
+        }
+        return a.sample.localeCompare(b.sample);
+      })[0];
+
+    if (!best || best.matchRate < 0.5) {
       return null;
     }
 
@@ -350,16 +385,21 @@ weight = 4
     const description = Array.isArray(yaku.description)
       ? yaku.description.join(" ")
       : yaku.description || "";
+    const matchRateLabel = `${Math.round(best.matchRate * 100)}%`;
 
-    return `
+    return {
+      score: best.matchRate,
+      html: `
       <div class="recommendation">
         <h3>${name}</h3>
         <p>${hanLabel}</p>
         <p>${description}</p>
-        <div class="tile-surface">${renderTileSurface(matchedSample)}</div>
-        <p>一致したサンプル: ${matchedSample}</p>
+        <p>一致度: ${matchRateLabel}</p>
+        <div class="tile-surface">${renderTileSurface(best.sample)}</div>
+        <p>近いサンプル: ${best.sample}</p>
       </div>
-    `;
+    `,
+    };
   }
 
   function renderRecommendations() {
@@ -372,12 +412,14 @@ weight = 4
     }
     const items = yakuData
       .map((yaku) => buildRecommendation(yaku))
-      .filter(Boolean);
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.html);
 
     recommendations.innerHTML =
       items.length > 0
         ? items.join("")
-        : "<p>一致する役サンプルが見つかりませんでした。</p>";
+        : "<p>近い役サンプルが見つかりませんでした。</p>";
   }
 
   function rerenderAll() {

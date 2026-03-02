@@ -7,4 +7,4 @@ pdfをダウンロードできます。
 
 |version|URL|
 |-|-|
-|[v2.0.0](/v2/v2.0.0)|[ダウンロード](/assets/v2.0.0/output/tile-layout.pdf)|
+|[v2.0.0](/aws-mahjong/v2/v2.0.0/)|[ダウンロード](/aws-mahjong/assets/v2.0.0/output/tile-layout.pdf)|
