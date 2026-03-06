@@ -11,9 +11,7 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": [
-        "超低コストで静的サイトを構築することができる"
-      ]
+      "description": []
     },
     {
       "id": "serverless-api",
@@ -140,7 +138,7 @@
       "id": "master-replica",
       "name": "マスター・レプリカ構成",
       "sampleMpszList": [
-        "888s"
+        "777s"
       ],
       "isPonAllowed": true,
       "isChiAllowed": false,
