@@ -7,23 +7,22 @@ weight = 2
 
 ### コンピューティングとサーバレス
 
-||||||||
-|-|-|-|-|-|-|
-|![](/aws-mahjong/assets/v2.0.0/output/1m.svg)|AWS Lambda|![](/aws-mahjong/assets/v2.0.0/output/2m.svg)|Amazon EC2|![](/aws-mahjong/assets/v2.0.0/output/3m.svg)|Amazon ECS|
-|![](/aws-mahjong/assets/v2.0.0/output/4m.svg)|Amazon EC2 Auto Scaling|![](/aws-mahjong/assets/v2.0.0/output/5m.svg)|AWS Batch|![](/aws-mahjong/assets/v2.0.0/output/6m.svg)|Amazon ECR|
-- [AWS Lambda]
-- [Amazon EC2]
-- [Amazon ECS]
-- [Amazon EC2 Auto Scaling]
-- [AWS Batch]
-- [Amazon ECR]
-- [AWS Step Functions]
-- [Amazon Event Bridge]
-- [Amazon SQS]
+- AWS Lambda
+- Amazon EC2
+- Amazon ECS
+- Amazon EC2 Auto Scaling
+- AWS Batch
+- Amazon ECR
+- AWS Step Functions
+- Amazon Event Bridge
+- Amazon SQS
 
 <div id="manzu"></div>
 
 ## 筒子
+
+- AWS Direct Connect
+- Amazon API Gateway
 
 ### ネットワークとDevTools
 
