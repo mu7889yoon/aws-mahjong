@@ -1,5 +1,5 @@
 +++
-title = "3分でわかる！AWS麻雀の遊び方"
+title = "3分でわかる！麻雀の遊び方"
 linkTitle = "Quick Start"
 weight = 2
 +++
