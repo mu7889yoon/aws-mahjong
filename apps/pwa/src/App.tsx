@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { GameController } from './game/GameController';
 import { expandMeldTiles } from './game/tiles';
+import { findAction, resolveTileAction } from './handSelection';
 import { getTileArt } from './tileAssets';
 import type {
   ActionSelection,
@@ -11,17 +12,12 @@ import type {
   UiPlayerState,
   UiSnapshot
 } from './game/types';
+import type { HandMode } from './handSelection';
 
 const controller = new GameController();
 
+type TileOrientation = 'horizontal' | 'vertical';
 type SeatPosition = 'south' | 'west' | 'north' | 'east';
-
-const seatOrder: Array<{ index: number; position: SeatPosition }> = [
-  { index: 0, position: 'south' },
-  { index: 3, position: 'west' },
-  { index: 2, position: 'north' },
-  { index: 1, position: 'east' }
-];
 
 const actionLabels: Record<string, string> = {
   chi: 'チー',
@@ -42,29 +38,48 @@ function Tile({
   tile,
   hidden = false,
   compact = false,
-  mini = false
+  mini = false,
+  orientation = 'horizontal'
 }: {
   tile: string;
   hidden?: boolean;
   compact?: boolean;
   mini?: boolean;
+  orientation?: TileOrientation;
 }) {
   const art = hidden ? null : getTileArt(tile);
   const sizeClass = mini ? ' mini' : compact ? ' compact' : '';
+  const orientationClass = orientation === 'vertical' ? ' vertical' : '';
 
   return (
-    <span className={`tile${hidden ? ' hidden' : ''}${sizeClass}`}>
+    <span className={`tile${hidden ? ' hidden' : ''}${sizeClass}${orientationClass}`}>
       {art ? <img alt={art.label} className="tile-image" src={art.imageUrl} title={art.label} /> : null}
       {!art && !hidden ? <span className="tile-fallback">{tile}</span> : null}
     </span>
   );
 }
 
-function MeldView({ meld, compact = false, mini = false }: { meld: UiMeld; compact?: boolean; mini?: boolean }) {
+function MeldView({
+  meld,
+  compact = false,
+  mini = false,
+  orientation = 'horizontal'
+}: {
+  meld: UiMeld;
+  compact?: boolean;
+  mini?: boolean;
+  orientation?: TileOrientation;
+}) {
   return (
     <span className="meld">
       {meld.tiles.map((tile, index) => (
-        <Tile key={`${meld.meld}-${tile}-${index}`} tile={tile} compact={compact} mini={mini} />
+        <Tile
+          key={`${meld.meld}-${tile}-${index}`}
+          tile={tile}
+          compact={compact}
+          mini={mini}
+          orientation={orientation}
+        />
       ))}
     </span>
   );
@@ -81,18 +96,30 @@ function DiscardGrid({
     <div className={`discard-grid${vertical ? ' vertical' : ''}`}>
       {discards.map((discard, index) => (
         <span className={`discard${discard.called ? ' called' : ''}`} key={`${discard.tile}-${index}`}>
-          <Tile tile={discard.tile} compact />
+          <Tile tile={discard.tile} compact orientation={vertical ? 'vertical' : 'horizontal'} />
         </span>
       ))}
     </div>
   );
 }
 
-function HiddenRack({ count, vertical = false }: { count: number; vertical?: boolean }) {
+function HiddenRack({
+  count,
+  position
+}: {
+  count: number;
+  position: 'north' | 'west' | 'east';
+}) {
   return (
-    <div className={`hidden-rack${vertical ? ' vertical' : ''}`}>
+    <div className={`hidden-rack ${position}`}>
       {Array.from({ length: count }).map((_, index) => (
-        <Tile key={`hidden-${vertical ? 'v' : 'h'}-${index}`} tile="_" hidden compact={vertical} />
+        <Tile
+          key={`${position}-hidden-${index}`}
+          tile="_"
+          hidden
+          compact
+          orientation={position === 'north' ? 'horizontal' : 'vertical'}
+        />
       ))}
     </div>
   );
@@ -115,14 +142,57 @@ function ScorePlaque({
   );
 }
 
-function CenterDisplay({ snapshot }: { snapshot: UiSnapshot }) {
-  return (
-    <section className="center-display">
-      <div className="center-machine">
-        {seatOrder.map(({ index, position }) => (
-          <ScorePlaque key={position} player={snapshot.players[index]} position={position} />
-        ))}
+function CorePond({
+  player,
+  position
+}: {
+  player: UiPlayerState;
+  position: SeatPosition;
+}) {
+  const vertical = position === 'west' || position === 'east';
 
+  return (
+    <section className={`core-pond ${position}${player.isTurn ? ' active' : ''}`}>
+      {(position === 'north' || position === 'west') && player.melds.length > 0 ? (
+        <div className={`pond-melds ${vertical ? ' vertical' : ''}`}>
+          {player.melds.map((meld) => (
+            <MeldView
+              key={meld.meld}
+              meld={meld}
+              compact
+              orientation={vertical ? 'vertical' : 'horizontal'}
+            />
+          ))}
+        </div>
+      ) : null}
+
+      <DiscardGrid discards={player.discards} vertical={vertical} />
+
+      {(position === 'south' || position === 'east') && player.melds.length > 0 ? (
+        <div className={`pond-melds ${vertical ? ' vertical' : ''}`}>
+          {player.melds.map((meld) => (
+            <MeldView
+              key={meld.meld}
+              meld={meld}
+              compact
+              orientation={vertical ? 'vertical' : 'horizontal'}
+            />
+          ))}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function CenterMachine({ snapshot }: { snapshot: UiSnapshot }) {
+  return (
+    <section className="center-machine">
+      <ScorePlaque player={snapshot.players[2]} position="north" />
+      <ScorePlaque player={snapshot.players[3]} position="west" />
+      <ScorePlaque player={snapshot.players[1]} position="east" />
+      <ScorePlaque player={snapshot.players[0]} position="south" />
+
+      <div className="machine-shell">
         <div className="machine-screen">
           <span className="machine-round">{snapshot.roundLabel}</span>
           <strong className="machine-count">{snapshot.remainingTiles}</strong>
@@ -130,7 +200,6 @@ function CenterDisplay({ snapshot }: { snapshot: UiSnapshot }) {
             {snapshot.honba}本場 / 供託 {snapshot.riichiSticks}
           </span>
         </div>
-
         <div className="machine-dora">
           <span>ドラ</span>
           <div className="machine-dora-tiles">
@@ -145,96 +214,64 @@ function CenterDisplay({ snapshot }: { snapshot: UiSnapshot }) {
             )}
           </div>
         </div>
-
-        {snapshot.result ? (
-          <div className={`result-overlay ${snapshot.result.type}`}>
-            <strong>{snapshot.result.title}</strong>
-            {snapshot.result.detailLines.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </section>
-  );
-}
-
-function SouthSeat({ player }: { player: UiPlayerState }) {
-  return (
-    <section className={`seat-area seat-south${player.isTurn ? ' active' : ''}`}>
-      <div className="south-discards">
-        <DiscardGrid discards={player.discards} />
       </div>
 
-      <div className="south-hand-band">
-        {player.melds.length > 0 ? (
-          <div className="south-melds">
-            {player.melds.map((meld) => (
-              <MeldView key={meld.meld} meld={meld} />
-            ))}
-          </div>
-        ) : null}
-
-        <div className="south-hand">
-          {player.concealedTiles.map((tile, index) => (
-            <Tile key={`${tile}-${index}`} tile={tile} />
-          ))}
-          {player.drawnTile ? <Tile tile={player.drawnTile} /> : null}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function NorthSeat({ player }: { player: UiPlayerState }) {
-  return (
-    <section className={`seat-area seat-north${player.isTurn ? ' active' : ''}`}>
-      <HiddenRack count={player.concealedCount} />
-      {player.melds.length > 0 ? (
-        <div className="north-melds">
-          {player.melds.map((meld) => (
-            <MeldView key={meld.meld} meld={meld} compact />
+      {snapshot.result ? (
+        <div className={`result-overlay ${snapshot.result.type}`}>
+          <strong>{snapshot.result.title}</strong>
+          {snapshot.result.detailLines.map((line) => (
+            <span key={line}>{line}</span>
           ))}
         </div>
       ) : null}
-      <DiscardGrid discards={player.discards} />
     </section>
   );
 }
 
-function SideSeat({ player, position }: { player: UiPlayerState; position: 'west' | 'east' }) {
+function SouthHand({
+  player,
+  handMode,
+  getTileAction,
+  interactionEnabled
+}: {
+  player: UiPlayerState;
+  handMode: HandMode;
+  getTileAction: (tile: string, source: 'hand' | 'draw') => ActionSelection | null;
+  interactionEnabled: boolean;
+}) {
+  const renderTile = (tile: string, index: number, source: 'hand' | 'draw') => {
+    const action = getTileAction(tile, source);
+    const selectable = Boolean(action);
+
+    return (
+      <button
+        aria-label={`${action?.type === 'riichi' ? 'リーチ' : '打牌'} ${tile}`}
+        className={`south-hand-tile${selectable ? ' selectable' : ''}${handMode === 'riichi' && selectable ? ' riichi-mode' : ''}${interactionEnabled && !selectable ? ' muted' : ''}`}
+        disabled={!selectable}
+        key={`${source}-${tile}-${index}`}
+        onClick={() => {
+          if (action) controller.dispatchHumanAction(action);
+        }}
+        type="button"
+      >
+        <Tile tile={tile} />
+      </button>
+    );
+  };
+
   return (
-    <section className={`seat-area seat-${position}${player.isTurn ? ' active' : ''}`}>
-      <div className="side-seat">
-        <HiddenRack count={player.concealedCount} vertical />
-        <div className="side-center">
-          {player.melds.length > 0 ? (
-            <div className="side-melds">
-              {player.melds.map((meld) => (
-                <MeldView key={meld.meld} meld={meld} compact />
-              ))}
-            </div>
-          ) : null}
-          <DiscardGrid discards={player.discards} vertical />
+    <section className="south-hand-area">
+      <div className="south-hand">
+        <div className="south-hand-main">
+          {player.concealedTiles.map((tile, index) => renderTile(tile, index, 'hand'))}
         </div>
+        {player.drawnTile ? (
+          <div className="south-hand-draw">
+            {renderTile(player.drawnTile, 0, 'draw')}
+          </div>
+        ) : null}
       </div>
     </section>
-  );
-}
-
-function WallDecoration({
-  position,
-  count
-}: {
-  position: 'top' | 'left' | 'right';
-  count: number;
-}) {
-  return (
-    <div className={`wall wall-${position}`}>
-      {Array.from({ length: count }).map((_, index) => (
-        <span className="wall-brick" key={`${position}-${index}`} />
-      ))}
-    </div>
   );
 }
 
@@ -256,53 +293,47 @@ function ActionButton({
 
 function ActionPanel({
   actions,
+  handMode,
+  onHandModeChange,
   onSelect
 }: {
   actions: LegalAction[];
+  handMode: HandMode;
+  onHandModeChange: (mode: HandMode) => void;
   onSelect: (action: ActionSelection) => void;
 }) {
+  const discardAction = findAction(actions, 'discard');
+  const riichiAction = findAction(actions, 'riichi');
+  const panelActions = actions.filter((action) => action.type !== 'discard' && action.type !== 'riichi');
+
   return (
     <div className="actions">
-      {actions.map((action, index) => {
-        if (action.type === 'discard') {
-          return (
-            <div className="action-group" key={`discard-${index}`}>
-              <span className="action-title">打牌</span>
-              <div className="option-grid">
-                {action.options.map((option) => (
-                  <ActionButton
-                    key={`discard-${option.tile}-${option.tsumogiri ? 'tsumo' : 'hand'}`}
-                    onClick={() => onSelect({ type: 'discard', tile: option.tsumogiri ? `${option.tile}_` : option.tile })}
-                  >
-                    <Tile tile={option.tile} compact />
-                    <span>{option.tsumogiri ? 'ツモ切り' : option.tile}</span>
-                  </ActionButton>
-                ))}
-              </div>
+      {discardAction || riichiAction ? (
+        <div className="action-group hand-selection-panel">
+          <span className="action-title">手牌から選択</span>
+          <div className="hand-selection-copy">
+            {handMode === 'riichi' ? '下の手牌をクリックしてリーチ' : '下の手牌をクリックして打牌'}
+          </div>
+          {riichiAction ? (
+            <div className="option-grid">
+              <ActionButton
+                onClick={() => onHandModeChange('discard')}
+                tone={handMode === 'discard' ? 'primary' : 'secondary'}
+              >
+                <span>通常打牌</span>
+              </ActionButton>
+              <ActionButton
+                onClick={() => onHandModeChange('riichi')}
+                tone={handMode === 'riichi' ? 'danger' : 'secondary'}
+              >
+                <span>リーチ宣言</span>
+              </ActionButton>
             </div>
-          );
-        }
+          ) : null}
+        </div>
+      ) : null}
 
-        if (action.type === 'riichi') {
-          return (
-            <div className="action-group" key={`riichi-${index}`}>
-              <span className="action-title">リーチ</span>
-              <div className="option-grid">
-                {action.options.map((option) => (
-                  <ActionButton
-                    key={`riichi-${option.tile}`}
-                    tone="primary"
-                    onClick={() => onSelect({ type: 'riichi', tile: option.tile })}
-                  >
-                    <Tile tile={option.tile} compact />
-                    <span>{option.tile}</span>
-                  </ActionButton>
-                ))}
-              </div>
-            </div>
-          );
-        }
-
+      {panelActions.map((action, index) => {
         if (
           action.type === 'chi' ||
           action.type === 'pon' ||
@@ -367,7 +398,7 @@ function InfoPanel({ snapshot }: { snapshot: UiSnapshot }) {
       <p className="panel-kicker">AWS Mahjong</p>
       <strong>{snapshot.roundLabel}</strong>
       <span>残り {snapshot.remainingTiles} 枚</span>
-      <span>本場 {snapshot.honba}</span>
+      <span>{snapshot.honba}本場</span>
       <span>供託 {snapshot.riichiSticks}</span>
     </aside>
   );
@@ -383,7 +414,7 @@ function ControlRail({ snapshot }: { snapshot: UiSnapshot }) {
         <span>状態</span>
         <strong>
           {snapshot.pendingAction
-            ? '入力'
+            ? '入力待ち'
             : snapshot.status === 'finished'
               ? '終局'
               : '進行中'}
@@ -399,6 +430,7 @@ function ControlRail({ snapshot }: { snapshot: UiSnapshot }) {
 
 export function App(): React.JSX.Element {
   const [snapshot, setSnapshot] = useState<UiSnapshot>(controller.getSnapshot());
+  const [handMode, setHandMode] = useState<HandMode>('discard');
 
   useEffect(() => {
     const unsubscribe = controller.subscribe(() => {
@@ -412,6 +444,26 @@ export function App(): React.JSX.Element {
       controller.dispose();
     };
   }, []);
+
+  useEffect(() => {
+    const pending = snapshot.pendingAction;
+    if (!pending) {
+      setHandMode('discard');
+      return;
+    }
+
+    const hasRiichi = pending.actions.some((action) => action.type === 'riichi');
+    setHandMode((current) => (current === 'riichi' && !hasRiichi ? 'discard' : current));
+  }, [snapshot.pendingAction]);
+
+  const pendingAction = snapshot.pendingAction;
+  const discardAction = pendingAction ? findAction(pendingAction.actions, 'discard') : null;
+  const riichiAction = pendingAction ? findAction(pendingAction.actions, 'riichi') : null;
+  const handSelectableOptions = handMode === 'riichi' ? riichiAction?.options ?? [] : discardAction?.options ?? [];
+  const handInteractionEnabled = handSelectableOptions.length > 0;
+
+  const getSouthTileAction = (tile: string, source: 'hand' | 'draw'): ActionSelection | null =>
+    handInteractionEnabled ? resolveTileAction(handSelectableOptions, handMode, tile, source) : null;
 
   const statusText = snapshot.pendingAction
     ? pendingReasonLabels[snapshot.pendingAction.reason] ?? snapshot.pendingAction.reason
@@ -427,16 +479,24 @@ export function App(): React.JSX.Element {
             <InfoPanel snapshot={snapshot} />
             <ControlRail snapshot={snapshot} />
 
-            <WallDecoration position="top" count={14} />
-            <WallDecoration position="left" count={8} />
-            <WallDecoration position="right" count={8} />
+            <HiddenRack count={snapshot.players[2].concealedCount} position="north" />
+            <HiddenRack count={snapshot.players[3].concealedCount} position="west" />
+            <HiddenRack count={snapshot.players[1].concealedCount} position="east" />
 
-            <NorthSeat player={snapshot.players[2]} />
-            <SideSeat player={snapshot.players[3]} position="west" />
-            <SideSeat player={snapshot.players[1]} position="east" />
-            <SouthSeat player={snapshot.players[0]} />
+            <div className="table-core">
+              <CorePond player={snapshot.players[2]} position="north" />
+              <CorePond player={snapshot.players[3]} position="west" />
+              <CorePond player={snapshot.players[1]} position="east" />
+              <CorePond player={snapshot.players[0]} position="south" />
+              <CenterMachine snapshot={snapshot} />
+            </div>
 
-            <CenterDisplay snapshot={snapshot} />
+            <SouthHand
+              getTileAction={getSouthTileAction}
+              handMode={handMode}
+              interactionEnabled={handInteractionEnabled}
+              player={snapshot.players[0]}
+            />
           </div>
         </div>
       </section>
@@ -450,6 +510,8 @@ export function App(): React.JSX.Element {
         {snapshot.pendingAction ? (
           <ActionPanel
             actions={snapshot.pendingAction.actions}
+            handMode={handMode}
+            onHandModeChange={setHandMode}
             onSelect={(action) => {
               controller.dispatchHumanAction(action);
             }}

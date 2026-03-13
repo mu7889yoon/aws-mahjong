@@ -88,8 +88,8 @@ function parseDiscards(he: any): UiDiscard[] {
 
 export function makeDiscardOptions(tiles: string[]): DiscardOption[] {
   return tiles.map((tile) => ({
-    tile: tile.replace(/\*$/, ''),
-    tsumogiri: tile.endsWith('_')
+    tile: tile.replace(/[_*]+$/g, ''),
+    tsumogiri: tile.includes('_')
   }));
 }
 

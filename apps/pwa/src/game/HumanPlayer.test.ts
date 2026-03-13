@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { HumanPlayer } from './HumanPlayer';
 import { buildDefaultRule } from './rule';
+import { buildPlayerStates } from './tiles';
 
 function createPlayer(hand: string): HumanPlayer {
   const player = new HumanPlayer(() => {});
@@ -68,5 +69,15 @@ describe('HumanPlayer pending actions', () => {
     player.action({ zimo: { l: 0, p: 'm1' } }, vi.fn());
 
     expect(player.getPendingAction()?.actions.some((action) => action.type === 'ankan')).toBe(true);
+  });
+
+  it('自摸牌を drawnTile として分離できる', () => {
+    const player = createPlayer('m123456p123s456z1');
+
+    player.action({ zimo: { l: 0, p: 'm1' } }, vi.fn());
+
+    const states = buildPlayerStates((player as any)._model, 0);
+
+    expect(states[0].drawnTile).toBeTruthy();
   });
 });
