@@ -144,6 +144,118 @@ export const BASE_TILE_TEMPLATE = `<?xml version="1.0" encoding="UTF-8"?>
 </svg>`;
 
 // ============================================================================
+// スプライト用テンプレート (Sprite Template)
+// ============================================================================
+
+/**
+ * スプライト用 viewBox 寸法（ピクセル）
+ * 192×256px、22px角丸
+ */
+export const SPRITE_VIEWBOX_DIMENSIONS = {
+  width: 192,
+  height: 256,
+} as const;
+
+/**
+ * スプライト用レイアウト仕様
+ */
+export const SPRITE_LAYOUT_SPECS = {
+  tileType: { x: 181, y: 34, fontSize: 23 },
+  icon: { x: 11, y: 51, width: 170, height: 170 },
+  serviceName: { x: 96, y: 249, fontSize: 17 },
+  cornerRadius: 22,
+} as const;
+
+/**
+ * スプライト用ベース牌SVGテンプレート
+ *
+ * 192×256px、22px角丸クリッピング付き。
+ * assets/sprite-base-tile.svg と同一内容。
+ */
+export const SPRITE_BASE_TILE_TEMPLATE = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="256" viewBox="0 0 192 256">
+  <defs>
+    <!-- 22px角丸クリッピング -->
+    <clipPath id="tile-clip">
+      <rect x="0" y="0" width="192" height="256" rx="22" ry="22" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#tile-clip)">
+    <!-- フラット背景 -->
+    <rect x="0" y="0" width="192" height="256" rx="22" fill="#ece7e3ff" />
+
+    <!-- 牌種類表示エリア（右上） -->
+    <text
+      id="tile-type-placeholder"
+      x="181"
+      y="34"
+      font-family="sans-serif"
+      font-size="23"
+      text-anchor="end"
+      fill="#666666"
+    >{{TILE_TYPE}}</text>
+
+    <!-- AWSアイコン表示エリア（中央） -->
+    <g id="icon-placeholder" transform="translate(11, 51)">
+      <rect
+        x="0"
+        y="0"
+        width="170"
+        height="170"
+        fill="none"
+        stroke="#CCCCCC"
+        stroke-width="1.4"
+        stroke-dasharray="5.7,5.7"
+      />
+      <text
+        x="85"
+        y="96"
+        font-family="sans-serif"
+        font-size="17"
+        text-anchor="middle"
+        fill="#999999"
+      >{{ICON}}</text>
+    </g>
+
+    <!-- サービス名表示エリア（下部） -->
+    <text
+      id="service-name-placeholder"
+      x="96"
+      y="249"
+      font-family="sans-serif"
+      font-size="17"
+      text-anchor="middle"
+      fill="#333333"
+    >{{SERVICE_NAME}}</text>
+  </g>
+</svg>
+`;
+
+/**
+ * スプライト用テンプレートのアイコンプレースホルダーを置換
+ */
+export function replaceSpriteIcon(template: string, iconContent: string): string {
+  const iconPlaceholderRegex = /<g id="icon-placeholder"[^>]*>[\s\S]*?<\/g>/;
+  const newIconGroup = `<g id="icon-placeholder" transform="translate(${SPRITE_LAYOUT_SPECS.icon.x}, ${SPRITE_LAYOUT_SPECS.icon.y})">${iconContent}</g>`;
+  return template.replace(iconPlaceholderRegex, newIconGroup);
+}
+
+/**
+ * スプライト用テンプレートの全プレースホルダーを置換
+ */
+export function replaceSpriteAllPlaceholders(
+  template: string,
+  options: { tileType: string; serviceName: string; iconContent: string }
+): string {
+  let result = template;
+  result = replaceTileType(result, options.tileType);
+  result = replaceServiceName(result, options.serviceName);
+  result = replaceSpriteIcon(result, options.iconContent);
+  return result;
+}
+
+// ============================================================================
 // ヘルパー関数 (Helper Functions)
 // ============================================================================
 

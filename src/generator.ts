@@ -18,7 +18,10 @@ import {
 } from './types';
 import {
   replaceAllPlaceholders,
+  replaceSpriteAllPlaceholders,
   LAYOUT_SPECS,
+  SPRITE_LAYOUT_SPECS,
+  SPRITE_BASE_TILE_TEMPLATE,
 } from './template';
 
 // ============================================================================
@@ -295,6 +298,44 @@ export function generateTile(
   
   return generatedSvg;
 }
+
+/**
+ * スプライト用の牌SVGを生成
+ *
+ * 192×256 viewBox の SPRITE_BASE_TILE_TEMPLATE を使用し、
+ * 170×170 のアイコンエリアにスケーリングして埋め込む。
+ *
+ * @param tileSvg 生成済みの 68×96 viewBox 牌SVG（icon-placeholder 内にアイコンが埋め込み済み）
+ * @returns 192×256 viewBox のスプライト用SVG文字列
+ */
+export function generateSpriteTile(tileSvg: string): string {
+  // 牌種類ラベルを抽出
+  const tileTypeMatch = tileSvg.match(/<text[^>]*id="tile-type-placeholder"[^>]*>([\s\S]*?)<\/text>/);
+  const tileType = tileTypeMatch?.[1]?.trim() ?? '';
+
+  // サービス名を抽出
+  const serviceNameMatch = tileSvg.match(/<text[^>]*id="service-name-placeholder"[^>]*>([\s\S]*?)<\/text>/);
+  const serviceName = serviceNameMatch?.[1]?.trim() ?? '';
+
+  // icon-placeholder グループの中身を抽出
+  const iconGroupMatch = tileSvg.match(/<g id="icon-placeholder"[^>]*>([\s\S]*?)<\/g>\s*(?=\n|<)/);
+  let iconContent = '';
+  if (iconGroupMatch?.[1]) {
+    // 元のアイコンは translate(4,18) + scale で 60×60 にフィットされている
+    // 内部の <g transform="translate(...) scale(...)"> を取得
+    const innerContent = iconGroupMatch[1].trim();
+    // 170/60 ≈ 2.8333 のスケールで拡大
+    const rescale = SPRITE_LAYOUT_SPECS.icon.width / LAYOUT_SPECS.icon.width;
+    iconContent = `<g transform="scale(${rescale.toFixed(4)})">${innerContent}</g>`;
+  }
+
+  return replaceSpriteAllPlaceholders(SPRITE_BASE_TILE_TEMPLATE, {
+    tileType,
+    serviceName,
+    iconContent,
+  });
+}
+
 
 /**
  * 牌エントリとアイコンコンテンツから牌SVGを非同期で生成

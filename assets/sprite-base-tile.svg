@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="256" viewBox="0 0 192 256">
+  <defs>
+    <!-- 22px角丸クリッピング -->
+    <clipPath id="tile-clip">
+      <rect x="0" y="0" width="192" height="256" rx="22" ry="22" />
+    </clipPath>
+    <!-- 牌表面グラデーション -->
+    <linearGradient id="aws-tile-front-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#faf7f2" />
+      <stop offset="100%" stop-color="#f1ebe4" />
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#tile-clip)">
+    <!-- 全面不透明下地（角丸外を透明にしない） -->
+    <rect x="0" y="0" width="192" height="256" fill="#f1ebe4" />
+    <!-- グラデーション背景 -->
+    <rect x="0" y="0" width="192" height="256" rx="22" fill="url(#aws-tile-front-gradient)" />
+    <!-- ボーダー -->
+    <rect x="4" y="4" width="184" height="248" rx="20" fill="none" stroke="#e6ddd4" stroke-width="2.8" />
+    <!-- 左辺シャドウ -->
+    <rect x="0" y="0" width="20" height="256" rx="22" fill="#e8ddd1" opacity="0.95" />
+    <!-- 底辺シャドウ -->
+    <rect x="0" y="234" width="192" height="22" fill="#e3d7ca" opacity="0.7" />
+    <!-- 上辺ハイライト -->
+    <rect x="8" y="8" width="176" height="5.6" rx="2.8" fill="#ffffff" opacity="0.75" />
+
+    <!-- 牌種類表示エリア（右上） -->
+    <text
+      id="tile-type-placeholder"
+      x="181"
+      y="34"
+      font-family="sans-serif"
+      font-size="23"
+      text-anchor="end"
+      fill="#666666"
+    >{{TILE_TYPE}}</text>
+
+    <!-- AWSアイコン表示エリア（中央） -->
+    <g id="icon-placeholder" transform="translate(11, 51)">
+      <rect
+        x="0"
+        y="0"
+        width="170"
+        height="170"
+        fill="none"
+        stroke="#CCCCCC"
+        stroke-width="1.4"
+        stroke-dasharray="5.7,5.7"
+      />
+      <text
+        x="85"
+        y="96"
+        font-family="sans-serif"
+        font-size="17"
+        text-anchor="middle"
+        fill="#999999"
+      >{{ICON}}</text>
+    </g>
+
+    <!-- サービス名表示エリア（下部） -->
+    <text
+      id="service-name-placeholder"
+      x="96"
+      y="249"
+      font-family="sans-serif"
+      font-size="17"
+      text-anchor="middle"
+      fill="#333333"
+    >{{SERVICE_NAME}}</text>
+  </g>
+</svg>

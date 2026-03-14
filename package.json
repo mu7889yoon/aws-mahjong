@@ -8,6 +8,10 @@
     "build": "tsc",
     "start": "node dist/cli.js",
     "dev": "ts-node src/cli.ts",
+    "riichi-advanced:tiles": "ts-node src/riichiAdvancedSpriteCli.ts",
+    "riichi-advanced:up": "docker compose -f docker-compose.riichi-advanced.yml up --build",
+    "riichi-advanced:down": "docker compose -f docker-compose.riichi-advanced.yml down",
+    "riichi-advanced:logs": "docker compose -f docker-compose.riichi-advanced.yml logs -f riichi-advanced",
     "pwa:dev": "npm --prefix apps/pwa run dev --",
     "pwa:build": "npm --prefix apps/pwa run build",
     "pwa:test": "npm --prefix apps/pwa run test",
@@ -39,6 +43,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@resvg/resvg-js": "^2.6.2"
+    "@resvg/resvg-js": "^2.6.2",
+    "sharp": "^0.34.5"
   }
 }
