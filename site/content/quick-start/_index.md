@@ -1,7 +1,7 @@
 +++
 title = "3分でわかる！麻雀の遊び方"
 linkTitle = "Quick Start"
-weight = 2
+weight = 10
 +++
 
 麻雀は4人で行うテーブルゲームです。牌を使って役を作り、点数を競います。
