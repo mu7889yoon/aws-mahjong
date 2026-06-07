@@ -1,6 +1,54 @@
 {
   "yakus": [
     {
+      "id": "kiro",
+      "name": "Kiro",
+      "sampleMpszList": [
+        "555z"
+      ],
+      "isPonAllowed": true,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": 1,
+      "isCombineAllowed": false,
+      "description": [
+        "通常の役牌・白と合わせて1飜（複合しない）。",
+        "設計に集中しよう"
+      ]
+    },
+    {
+      "id": "cost-explorer",
+      "name": "コスト最適化",
+      "sampleMpszList": [
+        "666z"
+      ],
+      "isPonAllowed": true,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": 1,
+      "isCombineAllowed": false,
+      "description": [
+        "通常の役牌・發と合わせて1飜（複合しない）。",
+        "コストの可視化と最適化はアーキテクトの基本"
+      ]
+    },
+    {
+      "id": "iam",
+      "name": "最小権限",
+      "sampleMpszList": [
+        "777z"
+      ],
+      "isPonAllowed": true,
+      "isChiAllowed": false,
+      "han": 1,
+      "hanOpen": 1,
+      "isCombineAllowed": false,
+      "description": [
+        "通常の役牌・中と合わせて1飜（複合しない）。",
+        "最小権限の原則を守り、セキュアなアクセス制御を実現しよう"
+      ]
+    },
+    {
       "id": "static-site-hosting",
       "name": "静的サイトホスティング(CDP)",
       "sampleMpszList": [
@@ -12,7 +60,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "落ちにくい静的サイトを構築することができる"
+        "落ちにくい静的サイトを構築できる"
       ]
     },
     {
@@ -27,7 +75,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "サーバーレスでスケーラブルなAPIを構築するパターン"
+        "サーバーレスでスケーラブルなAPIを構築"
       ]
     },
     {
@@ -164,7 +212,7 @@
       "hanOpen": 1,
       "isCombineAllowed": false,
       "description": [
-        "Auroraを3台構成にし、マスター1台とリードレプリカ2台で可用性と読み取り性能を高める"
+        "マスター1台とレプリカ2台で可用性と読み取り性能を高める"
       ]
     },
     {

@@ -8,4 +8,5 @@ draft = false
 
 - [Quick Start](/aws-mahjong/quick-start/)
 - [全体ルール](/aws-mahjong/rule/)
-- [v2.0.0](/aws-mahjong/v2/v2.0.0/)
+- [v2.0.1](/aws-mahjong/v2.0.1/)
+- [v2.0.0](/aws-mahjong/v2.0.0/)

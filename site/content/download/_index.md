@@ -1,6 +1,6 @@
 +++
 title = 'Download'
-weight = 4
+weight = 30
 +++
 
 pdfをダウンロードできます。
