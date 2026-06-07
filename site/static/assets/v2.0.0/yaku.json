@@ -12,7 +12,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "Route 53、CloudFront、S3を利用する事で、落ちにくい静的サイトを構築することが可能になる。"
+        "落ちにくい静的サイトを構築することができる"
       ]
     },
     {
@@ -27,7 +27,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "API Gateway、Lambda、DynamoDBを組み合わせ、サーバーレスでスケーラブルなAPIを構築するパターン。"
+        "サーバーレスでスケーラブルなAPIを構築するパターン"
       ]
     },
     {
@@ -42,7 +42,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "DynamoDB Streams、Lambda、EventBridgeによるイベント駆動型のリアクティブな処理フローを実現する。"
+        "イベント駆動型の処理フローを実現する"
       ]
     },
     {
@@ -58,7 +58,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "ELB、EC2(またはECS)、Auroraで構成する典型的な3層Webアプリケーションアーキテクチャ。"
+        "ELBとEC2(またはECS)、Auroraで構成する典型的なWebアプリケーションアーキテクチャ"
       ]
     },
     {
@@ -74,7 +74,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "EC2(またはECS)、Aurora、ElastiCacheを組み合わせ、頻繁にアクセスされるデータをキャッシュして高速に返す構成。"
+        "EC2(またはECS)、Aurora、ElastiCacheを組み合わせ、頻繁にアクセスされるデータをキャッシュして高速に返す"
       ]
     },
     {
@@ -89,7 +89,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "EventBridgeでスケジュール起動し、ECRからコンテナイメージを取得してBatchでジョブを実行する構成。"
+        "EventBridgeでスケジュール起動し、ECRからコンテナイメージを取得してBatchでジョブを実行する構成"
       ]
     },
     {
@@ -104,7 +104,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "Direct Connectで専用線接続し、オンプレミスのデータベースをAurora、EC2へ移行する構成。"
+        "Direct Connectで専用線接続し、オンプレミスのデータベースをAurora、EC2へ移行する"
       ]
     },
     {
@@ -119,7 +119,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "SQSのキュー深度に応じてEC2 Auto Scalingがインスタンスを増減させ、EC2で処理を捌くパターン。"
+        "SQSのキューに応じてEC2 Auto Scalingがインスタンスを増減させ、EC2で処理を捌くパターン"
       ]
     },
     {
@@ -134,7 +134,7 @@
       "hanOpen": 1,
       "isCombineAllowed": false,
       "description": [
-        "CodeCommit、CodeBuild、CodeDeployを繋げた継続的インテグレーション/デリバリーのパイプライン。"
+        "継続的インテグレーション/デリバリーのパイプライン。"
       ]
     },
     {
@@ -149,7 +149,7 @@
       "hanOpen": 1,
       "isCombineAllowed": false,
       "description": [
-        "S3にナレッジを格納し、Bedrock AgentCoreとBedrockでRAG検索を行うAIエージェント構成。"
+        "S3 Vectorにナレッジを格納し、Bedrock AgentCoreとBedrockでRAG検索を行うAIエージェント構成"
       ]
     },
     {
@@ -164,7 +164,7 @@
       "hanOpen": 1,
       "isCombineAllowed": false,
       "description": [
-        "Auroraを3台構成にし、マスター1台とリードレプリカ2台で可用性と読み取り性能を高める。"
+        "Auroraを3台構成にし、マスター1台とリードレプリカ2台で可用性と読み取り性能を高める"
       ]
     },
     {
@@ -179,7 +179,7 @@
       "hanOpen": 2,
       "isCombineAllowed": false,
       "description": [
-        "CloudFormation、CodeCommit、CodeBuild、CodeDeployの4枚で、IaCを含むフルCI/CDパイプライン。"
+        "IaCを含むCI/CDパイプライン"
       ]
     },
     {
@@ -195,7 +195,7 @@
       "hanOpen": 2,
       "isCombineAllowed": false,
       "description": [
-        "ELB、EC2(またはECS)、Aurora、ElastiCacheの4枚構成で、キャッシュ付き3層Webアプリを実現する。"
+        "キャッシュ付き3層Webアプリケーションを構築する"
       ]
     },
     {
@@ -210,7 +210,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "ELB、ECS、ECR、Auroraの4枚で、コンテナのBlue/Greenデプロイを実現するダウンタイムゼロ構成。"
+        "コンテナのBlue/Greenデプロイを実現する"
       ]
     },
     {
@@ -225,6 +225,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
+        "マルチAZでシステムを冗長化しよう",
         "同じAWS役が2つ揃った時に成立、通常の一盃口とは複合しない。",
         "以下の場合はWebアプリケーション(CDP)が2つとAWS一盃口で5翻となる"
       ]
@@ -242,8 +243,8 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
+        "3AZ構成ででシステムをより堅牢にしよう",
         "同じAWS役が3つ揃った時に成立、通常の三暗刻とは複合しない。",
-        "リージョナルなサービスでも可とする。",
         "以下の場合はWebアプリケーション(CDP)が3つとAWS三暗刻で6翻となる。上がる際はどちらの形状で牌を晒して良い。"
       ]
     },
@@ -259,7 +260,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "API Gateway、Lambda、DynamoDB、EventBridge、Step Functions、Lambdaで構成するサーバーレスコーヒー注文システム。"
+        "一度は注文してみて欲しい、Serverlesspressoの構成"
       ]
     },
     {
@@ -275,7 +276,8 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "七対子の亜種。複数リージョンに同一構成を展開し、災害復旧(DR)を実現するマルチリージョン構成。"
+        "複数リージョンに同一構成を展開し、DRを実現するマルチリージョン構成",
+        "七対子の亜種。"
       ]
     },
     {
@@ -291,6 +293,7 @@
       "hanOpen": 13,
       "isCombineAllowed": false,
       "description": [
+        "牌の色がただ緑ぽいという理由、通常の緑一色より構成牌が1つ多い",
         "Storage Gateway、EFS、S3、Bedrock AgentCore、Bedrock、SageMaker、Cost Explorerの7牌のみで4面子1雀頭または七対子を構成する役満。"
       ]
     }
