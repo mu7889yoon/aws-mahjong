@@ -128,7 +128,7 @@ weight = 3
           return `
             <section>
               <h2>${hanHeading}</h2>
-              ${items.map((yaku) => buildYakuRow(yaku)).join("")}
+              ${items.map((yaku) => buildYakuRow(yaku)).join("<hr>")}
             </section>
           `;
         })
