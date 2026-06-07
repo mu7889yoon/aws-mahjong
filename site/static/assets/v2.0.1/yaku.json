@@ -11,7 +11,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": []
+      "description": [
+        "落ちにくい静的サイトを構築することができる"
+      ]
     },
     {
       "id": "serverless-api",
@@ -24,7 +26,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": []
+      "description": [
+        "サーバーレスでスケーラブルなAPIを構築するパターン"
+      ]
     },
     {
       "id": "event-driven-architecture",
@@ -38,7 +42,7 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        ""
+        "イベント駆動型の処理フローを実現する"
       ]
     },
     {
@@ -53,7 +57,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "ELBとEC2(またはECS)、Auroraで構成する典型的なWebアプリケーションアーキテクチャ"
+      ]
     },
     {
       "id": "in-memory-cache",
@@ -67,7 +73,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "EC2(またはECS)、Aurora、ElastiCacheを組み合わせ、頻繁にアクセスされるデータをキャッシュして高速に返す"
+      ]
     },
     {
       "id": "batch",
@@ -80,7 +88,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": []
+      "description": [
+        "EventBridgeでスケジュール起動し、ECRからコンテナイメージを取得してBatchでジョブを実行する構成"
+      ]
     },
     {
       "id": "migration",
@@ -93,7 +103,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "Direct Connectで専用線接続し、オンプレミスのデータベースをAurora、EC2へ移行する"
+      ]
     },
     {
       "id": "job-observer",
@@ -106,7 +118,9 @@
       "han": 1,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "SQSのキューに応じてEC2 Auto Scalingがインスタンスを増減させ、EC2で処理を捌くパターン"
+      ]
     },
     {
       "id": "cicd-pipeline",
@@ -119,7 +133,9 @@
       "han": 2,
       "hanOpen": 1,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "継続的インテグレーション/デリバリーのパイプライン。"
+      ]
     },
     {
       "id": "rag-agent",
@@ -132,7 +148,9 @@
       "han": 2,
       "hanOpen": 1,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "S3 Vectorにナレッジを格納し、Bedrock AgentCoreとBedrockでRAG検索を行うAIエージェント構成"
+      ]
     },
     {
       "id": "master-replica",
@@ -145,7 +163,9 @@
       "han": 2,
       "hanOpen": 1,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "Auroraを3台構成にし、マスター1台とリードレプリカ2台で可用性と読み取り性能を高める"
+      ]
     },
     {
       "id": "cicd-pipeline-kan",
@@ -159,7 +179,7 @@
       "hanOpen": 2,
       "isCombineAllowed": false,
       "description": [
-        "チーしてカンできる？意味がわからない"
+        "IaCを含むCI/CDパイプライン"
       ]
     },
     {
@@ -174,7 +194,9 @@
       "han": 3,
       "hanOpen": 2,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "キャッシュ付き3層Webアプリケーションを構築する"
+      ]
     },
     {
       "id": "blue-green-deploy-kan",
@@ -187,7 +209,9 @@
       "han": 3,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": ""
+      "description": [
+        "コンテナのBlue/Greenデプロイを実現する"
+      ]
     },
     {
       "id": "redundancy",
@@ -201,7 +225,8 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "同じAWS役が2つ揃った時に成立、通常の一盃口とは複合しない",
+        "マルチAZでシステムを冗長化しよう",
+        "同じAWS役が2つ揃った時に成立、通常の一盃口とは複合しない。",
         "以下の場合はWebアプリケーション(CDP)が2つとAWS一盃口で5翻となる"
       ]
     },
@@ -218,9 +243,9 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "同じAWS役が3つ揃った時に成立、通常の三暗刻とは複合しない",
-        "リージョナルなサービスでも可とする。",
-        "以下の場合はWebアプリケーション(CDP)が3つとAWS三暗刻で6翻となる 上がる際はどちらの形状で牌を晒して良い。"
+        "3AZ構成ででシステムをより堅牢にしよう",
+        "同じAWS役が3つ揃った時に成立、通常の三暗刻とは複合しない。",
+        "以下の場合はWebアプリケーション(CDP)が3つとAWS三暗刻で6翻となる。上がる際はどちらの形状で牌を晒して良い。"
       ]
     },
     {
@@ -234,7 +259,9 @@
       "han": 3,
       "hanOpen": null,
       "isCombineAllowed": false,
-      "description": []
+      "description": [
+        "一度は注文してみて欲しい、Serverlesspressoの構成"
+      ]
     },
     {
       "id": "dr-architecture",
@@ -249,7 +276,8 @@
       "hanOpen": null,
       "isCombineAllowed": false,
       "description": [
-        "七対子の亜種"
+        "複数リージョンに同一構成を展開し、DRを実現するマルチリージョン構成",
+        "七対子の亜種。"
       ]
     },
     {
@@ -265,7 +293,8 @@
       "hanOpen": 13,
       "isCombineAllowed": false,
       "description": [
-        "以下の7つの牌で構成された4面子1雀頭または七対子であれば成立"
+        "牌の色がただ緑ぽいという理由、通常の緑一色より構成牌が1つ多い",
+        "Storage Gateway、EFS、S3、Bedrock AgentCore、Bedrock、SageMaker、Cost Explorerの7牌のみで4面子1雀頭または七対子を構成する役満。"
       ]
     }
   ]
