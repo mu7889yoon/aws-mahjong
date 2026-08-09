@@ -1,0 +1,19 @@
+{{ if ne .Site.Params.menu_style "" }}
+<div class="sidebar">
+{{ if eq .Site.Params.menu_style "open-menu" }}
+{{- partial "menu/open-menu.html" . -}}
+{{ else if eq .Site.Params.menu_style "slide-menu" }}
+{{- partial "menu/slide-menu.html" . -}}
+{{ end }}
+{{ with .Site.Params.rental_form_url }}
+<nav class="rental-menu">
+<ul>
+<li><a href="{{ . }}">貸出はこちら</a></li>
+</ul>
+</nav>
+{{ end }}
+<div class="sidebar-footer">
+{{- partial "sidebar-footer.html" . -}}
+</div>
+</div>
+{{ end }}

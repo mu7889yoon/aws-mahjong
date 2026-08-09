@@ -14,12 +14,7 @@ ignoreLogs = ['sections-none-/']
 [params]
   menu_style = "slide-menu"
   ordersectionsby = "weight"
-
-[menus]
-  [[menus.main]]
-    name = "貸出はこちら"
-    url = "https://docs.google.com/forms/d/e/1FAIpQLSf3kwiPJiMAA3ymezgxUu-GL04xqXodnxjzMoDtDWJeymcjHA/viewform?usp=dialog"
-    weight = 10
+  rental_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSf3kwiPJiMAA3ymezgxUu-GL04xqXodnxjzMoDtDWJeymcjHA/viewform?usp=dialog"
 
 [markup]
   [markup.goldmark]
