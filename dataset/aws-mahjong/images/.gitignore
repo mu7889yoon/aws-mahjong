@@ -1,0 +1,6 @@
+# Keep image binaries out of GitHub; Labelme JSON sidecars remain trackable.
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.heic
