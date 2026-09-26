@@ -11,7 +11,13 @@
 画像を `images/train/`、`images/val/`、`images/test/` のいずれかに置き、画像フォルダを Labelme で開きます。
 
 ```sh
-labelme dataset/aws-mahjong/images/train \
+scripts/open-mahjong-labelme.sh test
+```
+
+train/val の画像を注釈するときは `test` を `train` または `val` に変えます。引数を省略した場合は `test` を開きます。Labelme に直接渡す場合は次のコマンドです。
+
+```sh
+labelme dataset/aws-mahjong/images/test \
   --labels dataset/aws-mahjong/classes.txt
 ```
 
