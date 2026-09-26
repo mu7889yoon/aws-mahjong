@@ -8,16 +8,16 @@
 
 ## 画像を注釈する
 
-画像を `images/train/`、`images/val/`、`images/test/` のいずれかに置き、画像フォルダを Labelme で開きます。
+画像をまず `images/unassigned/` に置いてアノテーションします。アノテーション完了後、元画像単位で train/val/test に分割してから YOLO ラベルを書き出します。
 
 ```sh
-scripts/open-mahjong-labelme.sh test
+scripts/open-mahjong-labelme.sh unassigned
 ```
 
-train/val の画像を注釈するときは `test` を `train` または `val` に変えます。引数を省略した場合は `test` を開きます。Labelme に直接渡す場合は次のコマンドです。
+分割済み画像を編集するときは `unassigned` を `train`、`val`、`test` に変えます。引数を省略した場合は `test` を開きます。Labelme に直接渡す場合は次のコマンドです。
 
 ```sh
-labelme dataset/aws-mahjong/images/test \
+labelme dataset/aws-mahjong/images/unassigned \
   --labels dataset/aws-mahjong/classes.txt
 ```
 
@@ -37,5 +37,5 @@ python3 scripts/labelme_to_yolo.py
 
 - 同じ撮影セッションの連写や加工画像を train と val/test に分けないでください。元写真単位で分けます。
 - test は学習やモデル選択に使わず、最後の評価用に残します。
-- commit 前に JSON の `imageData` が `null` であること、各矩形が牌の外周を囲んでいること、クラス表記が `classes.txt` と一致することを確認します。
+- アノテーション後に画像と JSON を同じ分割フォルダへ移してから変換します。commit 前に JSON の `imageData` が `null` であること、各領域が牌の外周を囲んでいること、クラス表記が `classes.txt` と一致することを確認します。
 - JSON と YOLO txt は追跡します。画像は GitHub に上げず、別の保管場所で共有・バックアップしてください。
