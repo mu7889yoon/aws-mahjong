@@ -27,14 +27,22 @@ def yolo_row(shape: dict[str, Any], class_ids: dict[str, int], width: int, heigh
     label = shape.get("label")
     if label not in class_ids:
         raise ValueError(f"unknown class label: {label!r}")
-    if shape.get("shape_type") != "rectangle":
-        raise ValueError(f"expected rectangle shape, got {shape.get('shape_type')!r}")
     points = shape.get("points") or []
-    if len(points) != 2:
-        raise ValueError("rectangle must have exactly two corner points")
-    (x0, y0), (x1, y1) = points
-    left, right = sorted((float(x0), float(x1)))
-    top, bottom = sorted((float(y0), float(y1)))
+    shape_type = shape.get("shape_type")
+    if shape_type == "rectangle":
+        if len(points) != 2:
+            raise ValueError("rectangle must have exactly two corner points")
+        (x0, y0), (x1, y1) = points
+        xs, ys = (float(x0), float(x1)), (float(y0), float(y1))
+    elif shape_type == "polygon":
+        if len(points) < 3:
+            raise ValueError("polygon must have at least three points")
+        xs = tuple(float(point[0]) for point in points)
+        ys = tuple(float(point[1]) for point in points)
+    else:
+        raise ValueError(f"expected rectangle or polygon shape, got {shape_type!r}")
+    left, right = min(xs), max(xs)
+    top, bottom = min(ys), max(ys)
     if width <= 0 or height <= 0 or left < 0 or top < 0 or right > width or bottom > height:
         raise ValueError(f"rectangle outside image bounds ({width}x{height}): {points}")
     if left == right or top == bottom:

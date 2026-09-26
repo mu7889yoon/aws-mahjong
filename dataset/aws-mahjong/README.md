@@ -21,7 +21,7 @@ labelme dataset/aws-mahjong/images/test \
   --labels dataset/aws-mahjong/classes.txt
 ```
 
-各牌に `rectangle` を1つ描き、ラベルは `classes.txt` の MPSZ 表記（例: `4m`、`7z`）から選びます。色付きの絵柄だけでなく、牌の白い縁を含む見えている牌面全体を囲みます。牌の順番は関係ありません。画像を JSON に埋め込む `--with-image-data` は使わないでください。
+各牌に1つずつ領域を描き、ラベルは `classes.txt` の MPSZ 表記（例: `4m`、`7z`）から選びます。`rectangle` と `polygon` のどちらでも使えます。色付きの絵柄だけでなく、牌の白い縁を含む見えている牌面全体を囲みます。牌の順番は関係ありません。画像を JSON に埋め込む `--with-image-data` は使わないでください。
 
 保存後は、`.json` を画像と一緒にこのフォルダに残します。JSON は画像ファイル名と矩形・クラス名を保持しますが、画像データそのものは含めません。注釈 JSON は GitHub に追加し、写真は追加しない運用です。
 
@@ -31,7 +31,7 @@ labelme dataset/aws-mahjong/images/test \
 python3 scripts/labelme_to_yolo.py
 ```
 
-各画像の JSON から `labels/{train,val,test}/<画像名>.txt` を生成します。YOLO 座標は正規化された `class_id center_x center_y width height` 形式です。`data.yaml` がクラス定義と画像分割を指定します。
+各画像の JSON から `labels/{train,val,test}/<画像名>.txt` を生成します。polygon は外接矩形に変換します。YOLO 座標は正規化された `class_id center_x center_y width height` 形式です。`data.yaml` がクラス定義と画像分割を指定します。
 
 ## 分割とレビュー
 
