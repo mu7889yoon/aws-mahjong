@@ -169,6 +169,18 @@ weight = 4
   .recommendation p:last-child {
     margin-bottom: 0;
   }
+  .recommendation__calls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 6px;
+  }
+  .recommendation__call {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f0f4f4;
+    font-size: 13px;
+  }
   .tile-surface > div {
     background-color: transparent !important;
     padding: 0 !important;
@@ -352,6 +364,10 @@ weight = 4
     };
   }
 
+  function boolLabel(value) {
+    return value === true ? "あり" : "なし";
+  }
+
   function buildRecommendation(yaku) {
     const samples = Array.isArray(yaku.sampleMpszList) ? yaku.sampleMpszList : [];
     const selected = selectedEntries();
@@ -393,6 +409,10 @@ weight = 4
       <div class="recommendation">
         <h3>${name}</h3>
         <p>${hanLabel}</p>
+        <div class="recommendation__calls" aria-label="鳴きの可否">
+          <span class="recommendation__call">ポン: ${boolLabel(yaku.isPonAllowed)}</span>
+          <span class="recommendation__call">チー: ${boolLabel(yaku.isChiAllowed)}</span>
+        </div>
         <p>${description}</p>
         <p>一致度: ${matchRateLabel}</p>
         <div class="tile-surface">${renderTileSurface(best.sample)}</div>
