@@ -96,6 +96,11 @@ resource "aws_iam_role" "github_actions" {
   max_session_duration = 3600
 }
 
+resource "aws_iam_role_policy_attachment" "github_actions_administrator_access" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
 data "aws_iam_policy_document" "github_actions_deploy" {
   statement {
     sid       = "TerraformState"
