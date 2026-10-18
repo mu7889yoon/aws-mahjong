@@ -33,10 +33,6 @@ export interface TileDetection {
 }
 
 export interface ClassificationResult {
-  model: string;
-  inputTokens: number;
-  outputTokens: number;
-  requestCount: number;
   detections: TileDetection[];
 }
 
@@ -112,9 +108,6 @@ export async function classifyImage(input: Buffer, apiKey: string): Promise<Clas
   });
   const model = process.env.TYPESAFE_MODEL || "jev-preview";
   const detections: TileDetection[] = [];
-  let inputTokens = 0;
-  let outputTokens = 0;
-  let requestCount = 0;
 
   // Two reference tiles per request keeps image payloads below the provider's
   // request limits while retaining one box answer per tile type.
@@ -151,9 +144,6 @@ export async function classifyImage(input: Buffer, apiKey: string): Promise<Clas
     for (let resultIndex = 0; resultIndex < results.length; resultIndex += 1) {
       const result = results[resultIndex];
       const batch = batches[index + resultIndex];
-      requestCount += 1;
-      inputTokens += result.usage.input_tokens ?? 0;
-      outputTokens += result.usage.output_tokens ?? 0;
       for (const { id } of batch) {
         const presence = result.answers[`present_${id}`];
         const position = result.answers[`box_${id}`];
@@ -169,5 +159,5 @@ export async function classifyImage(input: Buffer, apiKey: string): Promise<Clas
   }
 
   detections.sort((left, right) => right.probability - left.probability);
-  return { model, inputTokens, outputTokens, requestCount, detections };
+  return { detections };
 }

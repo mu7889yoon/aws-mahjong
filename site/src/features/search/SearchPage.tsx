@@ -215,10 +215,6 @@ type TileCandidate = {
 };
 
 type ClassificationResponse = {
-  model: string;
-  inputTokens: number;
-  outputTokens: number;
-  requestCount: number;
   detections: TileCandidate[];
 };
 
@@ -351,10 +347,6 @@ function ImageClassifier({
         ) : null}
         {result ? (
           <>
-            <Box color="text-body-secondary">
-              {result.model} · {result.requestCount}回 · 合計 {(result.inputTokens + result.outputTokens).toLocaleString()} tokens
-              （入力 {result.inputTokens.toLocaleString()} / 出力 {result.outputTokens.toLocaleString()}）
-            </Box>
             {result.detections.length === 0 ? (
               <Box color="text-body-secondary">牌の候補は見つかりませんでした。牌が大きく写るように撮り直してください。</Box>
             ) : visibleDetections.length === 0 ? (
@@ -364,7 +356,7 @@ function ImageClassifier({
                 <div className="search-classifier__candidates">
                   {visibleDetections.map((candidate) => (
                     <label className="search-classifier__candidate" key={candidate.id}>
-                      <TileHand mpsz={candidate.id} assetPath={version.assetPath} ariaLabel={candidate.label} />
+                      <TileHand compact mpsz={candidate.id} assetPath={version.assetPath} ariaLabel={candidate.label} />
                       <span>{candidate.label}</span>
                       <span className="search-classifier__confidence">
                         一致 {Math.round(candidate.probability * 100)}%
