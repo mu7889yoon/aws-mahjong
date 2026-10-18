@@ -124,11 +124,6 @@ function mapLocation(
 }
 
 export async function classifyImage(input: Buffer, apiKey: string): Promise<ClassificationResult> {
-  const threshold = Number(process.env.TILE_PRESENCE_THRESHOLD ?? "0.5");
-  if (!Number.isFinite(threshold) || threshold < 0 || threshold > 1) {
-    throw new Error("牌の判定しきい値が正しく設定されていません。");
-  }
-
   const preparedPhoto = await preparePhoto(input);
   const tilePhoto = image(preparedPhoto.bytes);
   const references = await Promise.all(
@@ -185,8 +180,8 @@ export async function classifyImage(input: Buffer, apiKey: string): Promise<Clas
       for (const { id } of batch) {
         const presence = result.answers[`present_${id}`];
         const position = result.answers[`box_${id}`];
-        const probability = presence?.type === "noul" ? presence.noul : 0;
-        if (probability < threshold || position?.type !== "box") continue;
+        if (presence?.type !== "noul" || position?.type !== "box") continue;
+        const probability = presence.noul;
         const location = mapLocation(
           position.box,
           preparedPhoto.width,
