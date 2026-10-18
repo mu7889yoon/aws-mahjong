@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { box, image, noul, TypeSafeClient, type BoxCoordinates } from "@typesafe-ai/sdk";
+import { box, image, noul, TypeSafeClient } from "@typesafe-ai/sdk";
 import sharp from "sharp";
 
 const referencesDirectory = path.resolve(
@@ -30,8 +30,6 @@ export interface TileDetection {
   id: string;
   label: string;
   probability: number;
-  location: BoxCoordinates;
-  boxConfidence: number;
 }
 
 export interface ClassificationResult {
@@ -59,10 +57,6 @@ function paddingToImageRequirements(width: number, height: number) {
   };
 }
 
-function clamp(value: number): number {
-  return Math.max(0, Math.min(1, value));
-}
-
 async function preparePhoto(input: Buffer) {
   const resized = await sharp(input, { limitInputPixels: 40_000_000 })
     .rotate()
@@ -82,7 +76,7 @@ async function preparePhoto(input: Buffer) {
     .extend({ ...padding, background: "#ffffff" })
     .jpeg({ quality: 90 })
     .toBuffer();
-  return { bytes, width, height, padding };
+  return { bytes };
 }
 
 async function prepareReference(id: string): Promise<Buffer> {
@@ -106,23 +100,6 @@ async function prepareReference(id: string): Promise<Buffer> {
     .toBuffer();
 }
 
-function mapLocation(
-  location: BoxCoordinates,
-  width: number,
-  height: number,
-  padding: ReturnType<typeof paddingToImageRequirements>,
-): BoxCoordinates | null {
-  const paddedWidth = width + padding.left + padding.right;
-  const paddedHeight = height + padding.top + padding.bottom;
-  const mapped = {
-    left: clamp((location.left * paddedWidth - padding.left) / width),
-    top: clamp((location.top * paddedHeight - padding.top) / height),
-    right: clamp((location.right * paddedWidth - padding.left) / width),
-    bottom: clamp((location.bottom * paddedHeight - padding.top) / height),
-  };
-  return mapped.right > mapped.left && mapped.bottom > mapped.top ? mapped : null;
-}
-
 export async function classifyImage(input: Buffer, apiKey: string): Promise<ClassificationResult> {
   const preparedPhoto = await preparePhoto(input);
   const tilePhoto = image(preparedPhoto.bytes);
@@ -140,7 +117,7 @@ export async function classifyImage(input: Buffer, apiKey: string): Promise<Clas
   let requestCount = 0;
 
   // Two reference tiles per request keeps image payloads below the provider's
-  // request limits while retaining one visible box per tile type.
+  // request limits while retaining one box answer per tile type.
   const batches: (typeof references)[] = [];
   for (let index = 0; index < references.length; index += 2) {
     batches.push(references.slice(index, index + 2));
@@ -182,19 +159,10 @@ export async function classifyImage(input: Buffer, apiKey: string): Promise<Clas
         const position = result.answers[`box_${id}`];
         if (presence?.type !== "noul" || position?.type !== "box") continue;
         const probability = presence.noul;
-        const location = mapLocation(
-          position.box,
-          preparedPhoto.width,
-          preparedPhoto.height,
-          preparedPhoto.padding,
-        );
-        if (!location) continue;
         detections.push({
           id,
           label: tileLabel(id),
           probability,
-          location,
-          boxConfidence: position.confidence ?? 0,
         });
       }
     }

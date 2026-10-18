@@ -133,24 +133,6 @@
   height: auto;
 }
 
-.search-classifier__box {
-  position: absolute;
-  border: 2px solid #0972d3;
-  background: rgb(9 114 211 / 8%);
-  pointer-events: none;
-}
-
-.search-classifier__box span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.125rem 0.25rem;
-  color: #fff;
-  background: #0972d3;
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
 .search-classifier__candidates {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
