@@ -10,7 +10,7 @@
     "dev": "ts-node src/cli.ts",
     "generate": "ts-node src/cli.ts",
     "pdf:layout": "ts-node src/png-layout-pdf-cli.ts",
-    "docs:build": "node scripts/build-docs.mjs",
+    "docs:build": "npm --prefix site run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

@@ -1,5 +1,0 @@
-{{- $path := .Get 0 -}}
-{{- if not $path -}}
-  {{- errorf "The %q shortcode requires one positional argument. See %s" .Name .Position -}}
-{{- end -}}
-{{- $path | relURL -}}

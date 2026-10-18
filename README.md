@@ -1,77 +1,40 @@
 # aws-mahjong
 
-https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/architecture/approved/architecture-icons/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582.zip
+AWSアイコンを使った麻雀牌の生成ツールと、牌・ルールを閲覧するサイトです。牌画像生成CLIとサイトは独立しており、それぞれルートと `site/` にあります。
 
-AWSアイコン麻雀牌の生成ツールです。  
-このリポジトリには次の機能を統合しています。
-
-- `aws-mahjong`: AWSアイコン入り牌SVG生成
-- `mahjong-tile-generator`: SVG/PNG生成とPNGレイアウトPDF出力
-- `merjong` (CDN): ブラウザレンダリングは `jsdelivr` 経由で利用
-
-## セットアップ
+## 牌画像生成CLI
 
 ```bash
-npm install
-```
-
-## 牌画像を生成する
-
-```bash
+npm ci
 npm run generate
 ```
 
-出力形式を指定する場合:
+出力形式や縮尺は指定できます。
 
 ```bash
 npm run generate -- --format png
 npm run generate -- --format svg,png --scale 4
 ```
 
-## PNGを印刷用PDFに並べる
+生成したPNGを印刷用PDFに並べるには、次を実行します。
 
 ```bash
 npm run pdf:layout
-```
-
-入力/出力を指定する場合:
-
-```bash
 npm run pdf:layout -- --input ./output --output ./output/tile-layout.pdf
 ```
 
-## MPSZレンダラーを使う
+`npm test` はCLIのテスト、`npm run build` はTypeScriptのビルドを実行します。牌画像の元になるAWS Architecture Iconsは[公式配布アーカイブ](https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/architecture/approved/architecture-icons/Icon-package_01302026.31b40d126ed27079b708594940ad577a86150582.zip)です。
 
-すぐに試す場合:
+## サイト
 
-1. `npm run generate`（`output/*.svg` を作成）
-2. `npx serve .`
-3. `http://localhost:3000/sample-custom-tiles.html` を開く
-4. `theme.json` の `baseUrl` が `./output/` であることを確認
-
-`sample-custom-tiles.html` は `web/merjong-wrapper.js` 経由で描画します。
-`web/merjong-wrapper.js` は `https://cdn.jsdelivr.net/npm/merjong/+esm` をベースに呼び出し、カスタム牌テーマを適用します。
-
-## Docs (GitHub Pages)
+サイトの開発・ビルド手順とコンテンツ構成は [site/README.md](site/README.md) を参照してください。ローカルで起動するには次を実行します。
 
 ```bash
-npm run docs:build
+cd site
+npm ci
+npm run dev
 ```
 
-生成物:
+Pull RequestではCLIとサイトのテスト・ビルドを実行します。`main` へのpush、またはActionsの `workflow_dispatch` でGitHub Pagesへ公開します。サイトの既定のbase pathは `/aws-mahjong/` です。
 
-- `docs/index.html`
-- `docs/web/merjong-wrapper.js`
-- `docs/output/*.svg`
-- `docs/theme.json`
-
-GitHub Pages は `docs/` を配信対象に設定してください。
-
-## 主なディレクトリ
-
-- `src`: SVG/PNG/PDF生成のCLI実装
-- `tests`: ユニットテスト
-- `web/merjong-wrapper.js`: カスタム牌テーマ用ラッパー
-- `scripts/build-docs.mjs`: docsビルドスクリプト
-- `assets`: AWSアイコン
-- `output`: 生成結果
+サイト側の依存関係をインストール済みなら、ルートから `npm run docs:build` でもサイトをビルドできます。出力先は `site/dist/` です。
