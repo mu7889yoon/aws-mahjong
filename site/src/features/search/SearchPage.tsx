@@ -55,7 +55,7 @@ function SearchPageForVersion({ version }: SearchPageProps) {
 
       <ColumnLayout columns={2} borders="vertical" minColumnWidth={320}>
         <Container header={<Header variant="h2">牌を選ぶ</Header>}>
-          <SpaceBetween size="l">
+          <SpaceBetween size="s">
             {version.tileGroups.map((group) => (
               <section className="search-tile-group" key={group.id} aria-label={group.title}>
                 <Box variant="h3">{group.title}</Box>
