@@ -24,6 +24,7 @@ const honorNames: Record<string, string> = {
   "7z": "中",
 };
 const suitNames: Record<string, string> = { m: "萬", p: "筒", s: "索" };
+const minimumImageDimension = 280;
 
 export interface TileDetection {
   id: string;
@@ -45,9 +46,9 @@ function tileLabel(id: string): string {
   return honorNames[id] ?? `${id[0]}${suitNames[id[1]] ?? id[1]}`;
 }
 
-function paddingToMultipleOf32(width: number, height: number) {
-  const paddedWidth = Math.ceil(width / 32) * 32;
-  const paddedHeight = Math.ceil(height / 32) * 32;
+function paddingToImageRequirements(width: number, height: number) {
+  const paddedWidth = Math.ceil(Math.max(width, minimumImageDimension) / 32) * 32;
+  const paddedHeight = Math.ceil(Math.max(height, minimumImageDimension) / 32) * 32;
   const horizontal = paddedWidth - width;
   const vertical = paddedHeight - height;
   return {
@@ -72,11 +73,11 @@ async function preparePhoto(input: Buffer) {
   const metadata = await sharp(resized).metadata();
   const width = metadata.width;
   const height = metadata.height;
-  if (!width || !height || width < 256 || height < 256 || width * height < 78_400) {
+  if (!width || !height) {
     throw new Error("画像が小さすぎます。牌を大きく撮り直してください。");
   }
 
-  const padding = paddingToMultipleOf32(width, height);
+  const padding = paddingToImageRequirements(width, height);
   const bytes = await sharp(resized)
     .extend({ ...padding, background: "#ffffff" })
     .jpeg({ quality: 90 })
@@ -86,11 +87,21 @@ async function preparePhoto(input: Buffer) {
 
 async function prepareReference(id: string): Promise<Buffer> {
   const svg = await readFile(path.join(referencesDirectory, `${id}.svg`));
-  const raster = await sharp(svg).resize({ width: 128, height: 192, fit: "contain" }).png().toBuffer();
+  const raster = await sharp(svg)
+    .resize({ width: 288, height: 288, fit: "contain", background: "#ffffff" })
+    .png()
+    .toBuffer();
   const metadata = await sharp(raster).metadata();
-  if (!metadata.width || !metadata.height) throw new Error(`牌の見本を読めません: ${id}`);
+  if (
+    !metadata.width ||
+    !metadata.height ||
+    metadata.width < minimumImageDimension ||
+    metadata.height < minimumImageDimension
+  ) {
+    throw new Error(`牌の見本を読めません: ${id}`);
+  }
   return sharp(raster)
-    .extend({ ...paddingToMultipleOf32(metadata.width, metadata.height), background: "#ffffff" })
+    .extend({ ...paddingToImageRequirements(metadata.width, metadata.height), background: "#ffffff" })
     .png()
     .toBuffer();
 }
@@ -99,7 +110,7 @@ function mapLocation(
   location: BoxCoordinates,
   width: number,
   height: number,
-  padding: ReturnType<typeof paddingToMultipleOf32>,
+  padding: ReturnType<typeof paddingToImageRequirements>,
 ): BoxCoordinates | null {
   const paddedWidth = width + padding.left + padding.right;
   const paddedHeight = height + padding.top + padding.bottom;
