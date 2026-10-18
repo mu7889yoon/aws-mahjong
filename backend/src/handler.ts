@@ -1,4 +1,5 @@
 import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
+import { APIError } from "@typesafe-ai/sdk";
 import type { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
 import { classifyImage } from "./classifier.js";
 
@@ -60,7 +61,22 @@ export async function handler(event: APIGatewayProxyEventV2): Promise<APIGateway
     const result = await classifyImage(input, await getApiKey());
     return response(200, result, origin);
   } catch (error) {
-    console.error("Image classification failed.", error instanceof Error ? error.name : "unknown error");
+    const detail = error instanceof APIError && typeof error.body === "object" && error.body !== null
+      ? (error.body as { detail?: unknown }).detail
+      : undefined;
+    const errorType =
+      typeof detail === "object" && detail !== null &&
+      typeof (detail as { error_type?: unknown }).error_type === "string" &&
+      /^[a-z0-9_]{1,80}$/i.test((detail as { error_type: string }).error_type)
+        ? (detail as { error_type: string }).error_type
+        : undefined;
+    console.error("Image classification failed.", {
+      requestId: event.requestContext.requestId,
+      errorName: error instanceof Error ? error.name : "unknown",
+      ...(error instanceof APIError
+        ? { status: error.status, providerRequestId: error.requestId, ...(errorType ? { errorType } : {}) }
+        : {}),
+    });
     return response(502, { error: "画像を判定できませんでした。少し待ってから再度お試しください。" }, origin);
   }
 }
