@@ -75,7 +75,6 @@ resource "aws_lambda_function" "classifier" {
   environment {
     variables = {
       ALLOWED_ORIGIN              = var.api_origin
-      TILE_PRESENCE_THRESHOLD     = "0.5"
       TYPESAFE_API_KEY_SECRET_ARN = aws_secretsmanager_secret.typesafe_api_key.arn
       TYPESAFE_MODEL              = var.typesafe_model
     }

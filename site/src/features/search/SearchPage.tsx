@@ -3,8 +3,10 @@ import Box from "@cloudscape-design/components/box";
 import Button from "@cloudscape-design/components/button";
 import ColumnLayout from "@cloudscape-design/components/column-layout";
 import Container from "@cloudscape-design/components/container";
+import FormField from "@cloudscape-design/components/form-field";
 import Header from "@cloudscape-design/components/header";
 import SpaceBetween from "@cloudscape-design/components/space-between";
+import Slider from "@cloudscape-design/components/slider";
 import { useEffect, useMemo, useState } from "react";
 import type { SiteVersion } from "../../content/types";
 import { TileHand } from "../../components/TileHand";
@@ -236,6 +238,8 @@ function ImageClassifier({
   const [error, setError] = useState<string>();
   const [result, setResult] = useState<ClassificationResponse>();
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [threshold, setThreshold] = useState(0.5);
+  const visibleDetections = result?.detections.filter(({ probability }) => probability >= threshold) ?? [];
 
   useEffect(() => {
     if (!file) {
@@ -278,8 +282,11 @@ function ImageClassifier({
   function applyDetectedCounts() {
     if (!result) return;
     const next = clearTileCounts(createEmptyTileCounts());
-    for (const [id, count] of Object.entries(quantities)) {
-      if (isTileId(id)) next[id] = Math.max(0, Math.min(4, Math.trunc(count)));
+    for (const candidate of visibleDetections) {
+      if (isTileId(candidate.id)) {
+        const count = quantities[candidate.id] ?? 0;
+        next[candidate.id] = Math.max(0, Math.min(4, Math.trunc(count)));
+      }
     }
     onApply(next);
   }
@@ -288,8 +295,23 @@ function ImageClassifier({
     <Container header={<Header variant="h2">画像から牌候補を探す</Header>}>
       <SpaceBetween size="m">
         <Box color="text-body-secondary">
-          JPGまたはPNG（4MB以下）。画像は判定のためAWSとTypeSafeへ送信されます。このアプリでは保存しません。候補の枚数は人が確認して入力します。
+          JPGまたはPNG（4MB以下）。画像は判定のためTypeSafeへ送信されます。このアプリでは保存しません。候補の枚数は人が確認して入力します。
         </Box>
+        <FormField
+          label={`候補の判定しきい値: ${Math.round(threshold * 100)}%`}
+          description="値を下げると一致度の低い候補も表示されます。候補が牌かどうか画像を確認してください。"
+        >
+          <Slider
+            ariaLabel="候補の判定しきい値"
+            max={1}
+            min={0}
+            onChange={({ detail }) => setThreshold(detail.value)}
+            referenceValues={[0, 0.5, 1]}
+            step={0.05}
+            value={threshold}
+            valueFormatter={(value) => `${Math.round(value * 100)}%`}
+          />
+        </FormField>
         {!apiUrl ? (
           <Box color="text-status-warning">画像判定APIはまだ設定されていません。</Box>
         ) : null}
@@ -327,7 +349,7 @@ function ImageClassifier({
         {previewUrl ? (
           <div className="search-classifier__preview" aria-label="画像と判定候補">
             <img src={previewUrl} alt="選択した麻雀牌の画像" />
-            {result?.detections.map((candidate) => (
+            {visibleDetections.map((candidate) => (
               <div
                 aria-label={`${candidate.label} 候補`}
                 className="search-classifier__box"
@@ -352,10 +374,12 @@ function ImageClassifier({
             </Box>
             {result.detections.length === 0 ? (
               <Box color="text-body-secondary">牌の候補は見つかりませんでした。牌が大きく写るように撮り直してください。</Box>
+            ) : visibleDetections.length === 0 ? (
+              <Box color="text-body-secondary">このしきい値を超える候補はありません。しきい値を下げると候補が表示されることがあります。</Box>
             ) : (
               <>
                 <div className="search-classifier__candidates">
-                  {result.detections.map((candidate) => (
+                  {visibleDetections.map((candidate) => (
                     <label className="search-classifier__candidate" key={candidate.id}>
                       <TileHand mpsz={candidate.id} assetPath={version.assetPath} ariaLabel={candidate.label} />
                       <span>{candidate.label}</span>
