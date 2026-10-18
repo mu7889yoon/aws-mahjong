@@ -1,0 +1,64 @@
+[
+  {
+    "id": "manzu",
+    "title": "萬子",
+    "description": "コンピューティングとサーバレス",
+    "tiles": [
+      { "id": "1m", "name": "AWS Lambda", "url": "https://aws.amazon.com/lambda/" },
+      { "id": "2m", "name": "Amazon EC2", "url": "https://aws.amazon.com/ec2/" },
+      { "id": "3m", "name": "Amazon ECS", "url": "https://aws.amazon.com/ecs/" },
+      { "id": "4m", "name": "Amazon EC2 Auto Scaling", "url": "https://aws.amazon.com/ec2/autoscaling/" },
+      { "id": "5m", "name": "AWS Batch", "url": "https://aws.amazon.com/batch/" },
+      { "id": "6m", "name": "Amazon ECR", "url": "https://aws.amazon.com/ecr/" },
+      { "id": "7m", "name": "AWS Step Functions", "url": "https://aws.amazon.com/step-functions/" },
+      { "id": "8m", "name": "Amazon EventBridge", "url": "https://aws.amazon.com/eventbridge/" },
+      { "id": "9m", "name": "Amazon SQS", "url": "https://aws.amazon.com/sqs/" }
+    ]
+  },
+  {
+    "id": "pinzu",
+    "title": "筒子",
+    "description": "ネットワークとDevTools",
+    "tiles": [
+      { "id": "1p", "name": "AWS Direct Connect", "url": "https://aws.amazon.com/directconnect/" },
+      { "id": "2p", "name": "Amazon API Gateway", "url": "https://aws.amazon.com/api-gateway/" },
+      { "id": "3p", "name": "Elastic Load Balancing", "url": "https://aws.amazon.com/elasticloadbalancing/" },
+      { "id": "4p", "name": "Amazon CloudFront", "url": "https://aws.amazon.com/cloudfront/" },
+      { "id": "5p", "name": "Amazon Route 53", "url": "https://aws.amazon.com/route53/" },
+      { "id": "6p", "name": "AWS CloudFormation", "url": "https://aws.amazon.com/cloudformation/" },
+      { "id": "7p", "name": "AWS CodeCommit", "url": "https://aws.amazon.com/codecommit/" },
+      { "id": "8p", "name": "AWS CodeBuild", "url": "https://aws.amazon.com/codebuild/" },
+      { "id": "9p", "name": "AWS CodeDeploy", "url": "https://aws.amazon.com/codedeploy/" }
+    ]
+  },
+  {
+    "id": "souzu",
+    "title": "索子",
+    "description": "ストレージとAI/MLとデータベース",
+    "tiles": [
+      { "id": "1s", "name": "AWS Storage Gateway", "url": "https://aws.amazon.com/storagegateway/" },
+      { "id": "2s", "name": "Amazon EFS", "url": "https://aws.amazon.com/efs/" },
+      { "id": "3s", "name": "Amazon S3", "url": "https://aws.amazon.com/s3/" },
+      { "id": "4s", "name": "Amazon Bedrock AgentCore", "url": "https://aws.amazon.com/bedrock/agentcore/" },
+      { "id": "5s", "name": "Amazon Bedrock", "url": "https://aws.amazon.com/bedrock/" },
+      { "id": "6s", "name": "Amazon SageMaker", "url": "https://aws.amazon.com/sagemaker/" },
+      { "id": "7s", "name": "Amazon Aurora", "url": "https://aws.amazon.com/rds/aurora/" },
+      { "id": "8s", "name": "Amazon DynamoDB", "url": "https://aws.amazon.com/dynamodb/" },
+      { "id": "9s", "name": "Amazon ElastiCache", "url": "https://aws.amazon.com/elasticache/" }
+    ]
+  },
+  {
+    "id": "jihai",
+    "title": "字牌",
+    "description": "リージョンなど",
+    "tiles": [
+      { "id": "1z", "name": "US-EAST" },
+      { "id": "2z", "name": "AF-SOUTH" },
+      { "id": "3z", "name": "EU-WEST" },
+      { "id": "4z", "name": "AP-NORTHEAST" },
+      { "id": "5z", "name": "Kiro", "url": "https://kiro.dev/" },
+      { "id": "6z", "name": "AWS Cost Explorer", "url": "https://aws.amazon.com/aws-cost-management/aws-cost-explorer/" },
+      { "id": "7z", "name": "AWS IAM", "url": "https://aws.amazon.com/iam/" }
+    ]
+  }
+]

@@ -1,0 +1,101 @@
+:root {
+  color-scheme: light;
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f8f8f8;
+}
+
+#site-top-navigation {
+  position: sticky;
+  top: 0;
+  /* Keep navigation menus above AppLayout's sticky breadcrumbs (z-index 1000). */
+  z-index: 1001;
+}
+
+.site-main {
+  min-width: 0;
+}
+
+.site-markdown {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+}
+
+.site-markdown > :first-child {
+  margin-top: 0;
+}
+
+.site-markdown h1,
+.site-markdown h2,
+.site-markdown h3,
+.site-markdown h4 {
+  line-height: 1.4;
+  margin-block: 1.6em 0.6em;
+}
+
+.site-markdown img {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  margin-block: 1rem;
+}
+
+.markdown-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown-table-scroll th,
+.markdown-table-scroll td {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #d5dbdb;
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown-table-scroll th {
+  background: #f2f3f3;
+  white-space: nowrap;
+}
+
+.site-markdown pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.35rem;
+  background: #f2f3f3;
+}
+
+.site-markdown :not(pre) > code {
+  padding: 0.08em 0.3em;
+  border-radius: 0.2rem;
+  background: #f2f3f3;
+}
+
+@media (max-width: 640px) {
+  .site-markdown {
+    font-size: 0.95rem;
+  }
+
+  .site-markdown h1 {
+    font-size: 1.8rem;
+  }
+}
