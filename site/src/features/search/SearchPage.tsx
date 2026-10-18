@@ -212,8 +212,6 @@ type TileCandidate = {
   id: string;
   label: string;
   probability: number;
-  location: { left: number; top: number; right: number; bottom: number };
-  boxConfidence: number;
 };
 
 type ClassificationResponse = {
@@ -347,23 +345,8 @@ function ImageClassifier({
         </div>
         {error ? <div role="alert"><Box color="text-status-error">{error}</Box></div> : null}
         {previewUrl ? (
-          <div className="search-classifier__preview" aria-label="画像と判定候補">
+          <div className="search-classifier__preview">
             <img src={previewUrl} alt="選択した麻雀牌の画像" />
-            {visibleDetections.map((candidate) => (
-              <div
-                aria-label={`${candidate.label} 候補`}
-                className="search-classifier__box"
-                key={candidate.id}
-                style={{
-                  left: `${candidate.location.left * 100}%`,
-                  top: `${candidate.location.top * 100}%`,
-                  width: `${(candidate.location.right - candidate.location.left) * 100}%`,
-                  height: `${(candidate.location.bottom - candidate.location.top) * 100}%`,
-                }}
-              >
-                <span>{candidate.label} {Math.round(candidate.probability * 100)}%</span>
-              </div>
-            ))}
           </div>
         ) : null}
         {result ? (
@@ -384,7 +367,7 @@ function ImageClassifier({
                       <TileHand mpsz={candidate.id} assetPath={version.assetPath} ariaLabel={candidate.label} />
                       <span>{candidate.label}</span>
                       <span className="search-classifier__confidence">
-                        一致 {Math.round(candidate.probability * 100)}% · 枠 {Math.round(candidate.boxConfidence * 100)}%
+                        一致 {Math.round(candidate.probability * 100)}%
                       </span>
                       <input
                         aria-label={`${candidate.label}の枚数`}
