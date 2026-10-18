@@ -5,6 +5,7 @@ export type TileHandProps = {
   mpsz: string;
   assetPath: string;
   ariaLabel?: string;
+  compact?: boolean;
 };
 
 const TILE_WIDTH = 36;
@@ -22,7 +23,8 @@ type PositionedTile = {
   order: number;
 };
 
-function layoutTiles(tokens: readonly MpszToken[]): { tiles: PositionedTile[]; width: number } {
+function layoutTiles(tokens: readonly MpszToken[], compact: boolean): { tiles: PositionedTile[]; width: number } {
+  const handHeight = compact ? TILE_HEIGHT : HAND_HEIGHT;
   let left = 0;
   const tiles: PositionedTile[] = [];
 
@@ -48,7 +50,7 @@ function layoutTiles(tokens: readonly MpszToken[]): { tiles: PositionedTile[]; w
     tiles.push({
       tile: token,
       left,
-      top: sideways ? HAND_HEIGHT - TILE_WIDTH : HAND_HEIGHT - TILE_HEIGHT,
+      top: sideways ? handHeight - TILE_WIDTH : handHeight - TILE_HEIGHT,
       width: sideways ? TILE_HEIGHT : TILE_WIDTH,
       height: sideways ? TILE_WIDTH : TILE_HEIGHT,
       order,
@@ -93,8 +95,8 @@ function TileFace({ tile, assetPath }: { tile: MpszTile; assetPath: string }) {
   );
 }
 
-export function TileHand({ mpsz, assetPath, ariaLabel }: TileHandProps) {
-  const { tiles, width } = layoutTiles(parseMpsz(mpsz));
+export function TileHand({ mpsz, assetPath, ariaLabel, compact = false }: TileHandProps) {
+  const { tiles, width } = layoutTiles(parseMpsz(mpsz), compact);
 
   return (
     <div
@@ -105,9 +107,9 @@ export function TileHand({ mpsz, assetPath, ariaLabel }: TileHandProps) {
         maxWidth: "100%",
         overflowX: "auto",
         overflowY: "hidden",
-        borderRadius: 6,
-        backgroundColor: "green",
-        padding: 6,
+        borderRadius: compact ? 0 : 6,
+        backgroundColor: compact ? "transparent" : "green",
+        padding: compact ? 0 : 6,
         boxSizing: "border-box",
       }}
     >
