@@ -28,6 +28,13 @@ coverage/
 # Environment
 .env
 .env.local
+backend/references/
+backend/runtime-package/
+terraform/bootstrap/terraform.tfstate*
+terraform/app/classifier.zip
+terraform/**/.terraform/
+terraform/**/terraform.tfstate*
+terraform/**/terraform.tfstate.backup
 output/*.png
 output/*.svg
 

@@ -1,4 +1,4 @@
-name: Site CI and GitHub Pages
+name: Site CI, Terraform, and GitHub Pages
 
 on:
   pull_request:
@@ -32,6 +32,7 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             site/package-lock.json
+            backend/package-lock.json
 
       - name: Install generator dependencies
         run: npm ci
@@ -51,18 +52,34 @@ jobs:
           npm test
           npm run build
 
-      - name: Save Pages artifact
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
+      - name: Install image API dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Build image API
+        working-directory: backend
+        run: npm run sync:references && npm run build && npm run package
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          name: github-pages-source
-          path: site/dist
-          if-no-files-found: error
-          include-hidden-files: true
+          terraform_version: 1.10.5
+
+      - name: Check Terraform formatting
+        run: |
+          terraform fmt -check -recursive terraform/bootstrap
+          terraform fmt -check -recursive terraform/app
+
+      - name: Initialize and validate Terraform
+        run: |
+          terraform -chdir=terraform/bootstrap init -backend=false -input=false -lockfile=readonly
+          terraform -chdir=terraform/bootstrap validate
+          terraform -chdir=terraform/app init -backend=false -input=false -lockfile=readonly
+          terraform -chdir=terraform/app validate
 
   deploy:
-    name: Publish to GitHub Pages
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+    name: Deploy API and publish site
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     needs: verify
     runs-on: ubuntu-latest
     environment:
@@ -76,14 +93,77 @@ jobs:
       pages: write
       id-token: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: site/.node-version
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            site/package-lock.json
+            backend/package-lock.json
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.5
+
+      - name: Check deployment settings
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
+          TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+        run: |
+          : "${AWS_REGION:?Set the AWS_REGION repository variable}"
+          : "${AWS_ROLE_ARN:?Set the AWS_ROLE_ARN repository variable}"
+          : "${TF_STATE_BUCKET:?Set the TF_STATE_BUCKET repository variable}"
+
+      - name: Configure AWS credentials with GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: aws-mahjong-deploy
+
+      - name: Install and package image API
+        working-directory: backend
+        run: |
+          npm ci
+          npm run sync:references
+          npm run build
+          npm prune --omit=dev
+          npm run package
+
+      - name: Apply AWS infrastructure with Terraform
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+        run: |
+          terraform -chdir=terraform/app init -input=false \
+            -lockfile=readonly \
+            -backend-config="bucket=${TF_STATE_BUCKET}" \
+            -backend-config="key=aws-mahjong/app.tfstate" \
+            -backend-config="region=${AWS_REGION}" \
+            -backend-config="encrypt=true" \
+            -backend-config="use_lockfile=true"
+          terraform -chdir=terraform/app apply -input=false -auto-approve \
+            -var="aws_region=${AWS_REGION}" \
+            -var="api_origin=https://mu7889yoon.github.io"
+          echo "CLASSIFIER_ENDPOINT=$(terraform -chdir=terraform/app output -raw classifier_endpoint)" >> "$GITHUB_ENV"
+
+      - name: Install site dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Build site with image API endpoint
+        working-directory: site
+        run: VITE_TILE_CLASSIFIER_API_URL="$CLASSIFIER_ENDPOINT" npm run build
+
       - name: Set up GitHub Pages
         uses: actions/configure-pages@v5
-
-      - name: Download Pages artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages-source
-          path: site/dist
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

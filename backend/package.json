@@ -1,0 +1,23 @@
+{
+  "name": "aws-mahjong-image-api",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.15"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "sync:references": "node scripts/sync-references.mjs",
+    "package": "node scripts/package-runtime.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.900.0",
+    "@typesafe-ai/sdk": "^0.7.0",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.152",
+    "@types/node": "^24.7.1",
+    "typescript": "^5.9.3"
+  }
+}
