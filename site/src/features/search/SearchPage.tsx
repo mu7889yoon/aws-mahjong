@@ -5,7 +5,7 @@ import ColumnLayout from "@cloudscape-design/components/column-layout";
 import Container from "@cloudscape-design/components/container";
 import Header from "@cloudscape-design/components/header";
 import SpaceBetween from "@cloudscape-design/components/space-between";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { SiteVersion } from "../../content/types";
 import { TileHand } from "../../components/TileHand";
 import { assetUrl } from "../../app/paths";
@@ -19,9 +19,11 @@ import {
   adjustTileCount,
   clearTileCounts,
   createEmptyTileCounts,
+  isTileId,
   tileLabel,
   toMpsz,
   totalTileCount,
+  type TileCounts,
 } from "../../domain/tiles";
 import "./search.css";
 
@@ -46,6 +48,8 @@ function SearchPageForVersion({ version }: SearchPageProps) {
       <Container header={<Header variant="h1">役検索</Header>}>
         <Box variant="p">{version.title}の牌を選ぶと、条件に合う役サンプルを表示します。</Box>
       </Container>
+
+      <ImageClassifier onApply={(detectedCounts) => setCounts(detectedCounts)} version={version} />
 
       <ColumnLayout columns={2} borders="vertical" minColumnWidth={320}>
         <Container header={<Header variant="h2">牌を選ぶ</Header>}>
@@ -199,5 +203,189 @@ function SearchPageForVersion({ version }: SearchPageProps) {
         )}
       </Container>
     </SpaceBetween>
+  );
+}
+
+type TileCandidate = {
+  id: string;
+  label: string;
+  probability: number;
+  location: { left: number; top: number; right: number; bottom: number };
+  boxConfidence: number;
+};
+
+type ClassificationResponse = {
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  requestCount: number;
+  detections: TileCandidate[];
+};
+
+function ImageClassifier({
+  onApply,
+  version,
+}: {
+  onApply: (counts: TileCounts) => void;
+  version: SiteVersion;
+}) {
+  const apiUrl = import.meta.env.VITE_TILE_CLASSIFIER_API_URL;
+  const [file, setFile] = useState<File>();
+  const [previewUrl, setPreviewUrl] = useState<string>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
+  const [result, setResult] = useState<ClassificationResponse>();
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    if (!file) {
+      setPreviewUrl(undefined);
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+
+  async function classify() {
+    if (!file || !apiUrl) return;
+    setLoading(true);
+    setError(undefined);
+    setResult(undefined);
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "content-type": file.type },
+        body: file,
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | ClassificationResponse
+        | { error?: string }
+        | null;
+      if (!response.ok) {
+        throw new Error(payload && "error" in payload ? payload.error : `判定に失敗しました（${response.status}）。`);
+      }
+      if (!payload || !("detections" in payload)) throw new Error("判定結果を読み取れませんでした。");
+      setResult(payload);
+      setQuantities(Object.fromEntries(payload.detections.map(({ id }) => [id, 1])));
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "画像を判定できませんでした。");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function applyDetectedCounts() {
+    if (!result) return;
+    const next = clearTileCounts(createEmptyTileCounts());
+    for (const [id, count] of Object.entries(quantities)) {
+      if (isTileId(id)) next[id] = Math.max(0, Math.min(4, Math.trunc(count)));
+    }
+    onApply(next);
+  }
+
+  return (
+    <Container header={<Header variant="h2">画像から牌候補を探す</Header>}>
+      <SpaceBetween size="m">
+        <Box color="text-body-secondary">
+          JPGまたはPNG（4MB以下）。画像は判定のためAWSとTypeSafeへ送信されます。このアプリでは保存しません。候補の枚数は人が確認して入力します。
+        </Box>
+        {!apiUrl ? (
+          <Box color="text-status-warning">画像判定APIはまだ設定されていません。</Box>
+        ) : null}
+        <div className="search-classifier__controls">
+          <input
+            accept="image/jpeg,image/png"
+            aria-label="判定する麻雀牌の画像"
+            disabled={!apiUrl || loading}
+            onChange={(event) => {
+              const next = event.currentTarget.files?.[0];
+              setError(undefined);
+              setResult(undefined);
+              if (!next) return;
+              if (next.type !== "image/jpeg" && next.type !== "image/png") {
+                setFile(undefined);
+                setError("JPGまたはPNG画像を選択してください。");
+                event.currentTarget.value = "";
+                return;
+              }
+              if (next.size > 4 * 1024 * 1024) {
+                setFile(undefined);
+                setError("画像は4MB以下にしてください。");
+                event.currentTarget.value = "";
+                return;
+              }
+              setFile(next);
+            }}
+            type="file"
+          />
+          <Button disabled={!file || !apiUrl || loading} loading={loading} onClick={() => void classify()}>
+            画像を判定
+          </Button>
+        </div>
+        {error ? <div role="alert"><Box color="text-status-error">{error}</Box></div> : null}
+        {previewUrl ? (
+          <div className="search-classifier__preview" aria-label="画像と判定候補">
+            <img src={previewUrl} alt="選択した麻雀牌の画像" />
+            {result?.detections.map((candidate) => (
+              <div
+                aria-label={`${candidate.label} 候補`}
+                className="search-classifier__box"
+                key={candidate.id}
+                style={{
+                  left: `${candidate.location.left * 100}%`,
+                  top: `${candidate.location.top * 100}%`,
+                  width: `${(candidate.location.right - candidate.location.left) * 100}%`,
+                  height: `${(candidate.location.bottom - candidate.location.top) * 100}%`,
+                }}
+              >
+                <span>{candidate.label} {Math.round(candidate.probability * 100)}%</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
+        {result ? (
+          <>
+            <Box color="text-body-secondary">
+              {result.model} · {result.requestCount}回 · 合計 {(result.inputTokens + result.outputTokens).toLocaleString()} tokens
+              （入力 {result.inputTokens.toLocaleString()} / 出力 {result.outputTokens.toLocaleString()}）
+            </Box>
+            {result.detections.length === 0 ? (
+              <Box color="text-body-secondary">牌の候補は見つかりませんでした。牌が大きく写るように撮り直してください。</Box>
+            ) : (
+              <>
+                <div className="search-classifier__candidates">
+                  {result.detections.map((candidate) => (
+                    <label className="search-classifier__candidate" key={candidate.id}>
+                      <TileHand mpsz={candidate.id} assetPath={version.assetPath} ariaLabel={candidate.label} />
+                      <span>{candidate.label}</span>
+                      <span className="search-classifier__confidence">
+                        一致 {Math.round(candidate.probability * 100)}% · 枠 {Math.round(candidate.boxConfidence * 100)}%
+                      </span>
+                      <input
+                        aria-label={`${candidate.label}の枚数`}
+                        inputMode="numeric"
+                        max={4}
+                        min={0}
+                        onChange={(event) => {
+                          const count = event.currentTarget.value === ""
+                            ? 0
+                            : Math.max(0, Math.min(4, Math.trunc(Number(event.currentTarget.value) || 0)));
+                          setQuantities((current) => ({ ...current, [candidate.id]: count }));
+                        }}
+                        type="number"
+                        value={quantities[candidate.id] ?? 0}
+                      />
+                    </label>
+                  ))}
+                </div>
+                <Box color="text-body-secondary">候補は牌種ごとに1か所です。同じ牌が複数ある場合は枚数を調整してください。</Box>
+                <Button onClick={applyDetectedCounts}>入力した枚数を役検索に反映</Button>
+              </>
+            )}
+          </>
+        ) : null}
+      </SpaceBetween>
+    </Container>
   );
 }
